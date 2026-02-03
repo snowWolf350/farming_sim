@@ -124,6 +124,10 @@ public class Player : MonoBehaviour
                 //looking at plant
                 SetInteractable(plant);
             }
+            if (interactHit.transform.TryGetComponent(out Tools tools))
+            {
+                SetInteractable(tools);
+            }
         }
         else
         {

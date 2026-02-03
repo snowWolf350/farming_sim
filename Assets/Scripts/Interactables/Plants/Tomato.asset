@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Tomato
   m_EditorClassIdentifier: Assembly-CSharp::PlantSO
   plantName: tomato
-  seedVisual: {fileID: 0}
-  fullyDevelopedVisual: {fileID: 0}
-  halfDevelopedVisual: {fileID: 0}
+  seedVisual: {fileID: 8497704490357152794, guid: b600e3cedb66b3b42ad225ff9f56d46e, type: 3}
+  fullyDevelopedVisual: {fileID: 7908670921014708049, guid: c1822fe571e46654d9b2f620a4b46f69, type: 3}
+  halfDevelopedVisual: {fileID: 1384705560966705468, guid: 231b44e2e2cce4443a612545fe69f16d, type: 3}
