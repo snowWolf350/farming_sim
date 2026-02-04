@@ -11,8 +11,17 @@ public class Plant : MonoBehaviour, ICanInteract
 
     public void Interact(Player player)
     {
-        setParent(player.GetInteractSpawn());
-        player.SetEquippedPlant(this);
+        if (player.CheckPlantInInventory(plantSO, out int itemIndex))
+        {
+            //player has this plant in his inventory
+            player.IncreaseItemCountAt(itemIndex);
+            DestroySelf();
+        }
+        else
+        {
+            setParent(player.GetInteractSpawn());
+            player.EquipNewPlant(this);
+        }
     }
 
     public void setParent(Transform transform)

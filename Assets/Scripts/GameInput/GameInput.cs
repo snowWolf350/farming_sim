@@ -11,8 +11,8 @@ public class GameInput : MonoBehaviour
     //events
     public event EventHandler OnJump;
     public event EventHandler OnInteract;
-    public event EventHandler OnPlantEquipped;
-    public event EventHandler OnToolEquipped;
+    public event EventHandler OnPlant1Equipped;
+    public event EventHandler OnPlant2Equipped;
 
     //camera
     float mouseSensitivity = 25;
@@ -25,8 +25,8 @@ public class GameInput : MonoBehaviour
         playerInput.player.jump.Enable();
         playerInput.player.interact.Enable();
         playerInput.player.mouse.Enable();
-        playerInput.player.equipPlant.Enable();
-        playerInput.player.equipTool.Enable();
+        playerInput.player.plant1.Enable();
+        playerInput.player.plant2.Enable();
 
         Instance = this;
     }
@@ -35,20 +35,20 @@ public class GameInput : MonoBehaviour
     {
         playerInput.player.jump.performed += Jump_performed;
         playerInput.player.interact.performed += Interact_performed;
-        playerInput.player.equipPlant.performed += EquipPlant_performed;
-        playerInput.player.equipTool.performed += EquipTool_performed;
+        playerInput.player.plant1.performed += Plant1_performed;
+        playerInput.player.plant2.performed += Plant2_performed;
 
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    private void EquipTool_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    private void Plant2_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        OnToolEquipped?.Invoke(this,EventArgs.Empty);
+        OnPlant2Equipped?.Invoke(this,EventArgs.Empty);
     }
 
-    private void EquipPlant_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    private void Plant1_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        OnPlantEquipped?.Invoke(this, EventArgs.Empty);
+        OnPlant1Equipped?.Invoke(this, EventArgs.Empty);
     }
 
     private void Interact_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)

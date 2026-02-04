@@ -6,13 +6,20 @@ public class SeedStorage : MonoBehaviour,ICanInteract
 
     public void Interact(Player player)
     {
-        if (!player.UpdatePlantInventory(plantSO))
+        if (player.CheckPlantInInventory(plantSO, out int itemIndex))
         {
-            GameObject plantGO = Instantiate(plantSO.plantPrefab, player.GetInteractSpawn());
-            plantGO.transform.localPosition = Vector3.zero;
-            player.SetEquippedPlant(plantGO.GetComponent<Plant>());
+            //player has this plant in his inventory
+            player.IncreaseItemCountAt(itemIndex);
         }
-
+        else
+        {
+            //spawns new seed
+            GameObject plantGO = Instantiate(plantSO.plantPrefab, player.GetInteractSpawn());
+            //repositions seed into the interact transform
+            plantGO.transform.localPosition = Vector3.zero;
+            // sets and equips the current plant
+            player.EquipNewPlant(plantGO.GetComponent<Plant>());
+        }
     }
     
 

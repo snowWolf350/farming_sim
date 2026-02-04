@@ -14,13 +14,17 @@ public class selectedInteractable : MonoBehaviour
 
     private void Player_OnInteractableChanged(object sender, Player.OnInteractableChangedEventArgs e)
     {
-        if (e.Interactable == baseInteract)
+        if (outline!= null)
         {
-            outline.enabled = true;
-        }
-        else
-        {
-            outline.enabled = false;
+
+            if (e.Interactable == baseInteract)
+            {
+                outline.enabled = true;
+            }
+            else
+            {
+                outline.enabled = false;
+            } 
         }
     }
 }

@@ -43,7 +43,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "equipPlant",
+                    "name": "plant1",
                     "type": "Button",
                     "id": "64c88965-87cf-40c7-a975-353fe3dcc7d7",
                     "expectedControlType": "",
@@ -52,7 +52,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "equipTool",
+                    "name": "plant2",
                     "type": "Button",
                     "id": "e0105ec0-8603-4ebc-8771-9cb5db2433aa",
                     "expectedControlType": "",
@@ -212,7 +212,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "equipPlant",
+                    "action": "plant1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -223,7 +223,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "equipTool",
+                    "action": "plant2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

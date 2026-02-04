@@ -129,7 +129,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""equipPlant"",
+                    ""name"": ""plant1"",
                     ""type"": ""Button"",
                     ""id"": ""64c88965-87cf-40c7-a975-353fe3dcc7d7"",
                     ""expectedControlType"": """",
@@ -138,7 +138,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""equipTool"",
+                    ""name"": ""plant2"",
                     ""type"": ""Button"",
                     ""id"": ""e0105ec0-8603-4ebc-8771-9cb5db2433aa"",
                     ""expectedControlType"": """",
@@ -298,7 +298,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""equipPlant"",
+                    ""action"": ""plant1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -309,7 +309,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""equipTool"",
+                    ""action"": ""plant2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -324,8 +324,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_player_jump = m_player.FindAction("jump", throwIfNotFound: true);
         m_player_interact = m_player.FindAction("interact", throwIfNotFound: true);
         m_player_mouse = m_player.FindAction("mouse", throwIfNotFound: true);
-        m_player_equipPlant = m_player.FindAction("equipPlant", throwIfNotFound: true);
-        m_player_equipTool = m_player.FindAction("equipTool", throwIfNotFound: true);
+        m_player_plant1 = m_player.FindAction("plant1", throwIfNotFound: true);
+        m_player_plant2 = m_player.FindAction("plant2", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -410,8 +410,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_player_jump;
     private readonly InputAction m_player_interact;
     private readonly InputAction m_player_mouse;
-    private readonly InputAction m_player_equipPlant;
-    private readonly InputAction m_player_equipTool;
+    private readonly InputAction m_player_plant1;
+    private readonly InputAction m_player_plant2;
     /// <summary>
     /// Provides access to input actions defined in input action map "player".
     /// </summary>
@@ -440,13 +440,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @mouse => m_Wrapper.m_player_mouse;
         /// <summary>
-        /// Provides access to the underlying input action "player/equipPlant".
+        /// Provides access to the underlying input action "player/plant1".
         /// </summary>
-        public InputAction @equipPlant => m_Wrapper.m_player_equipPlant;
+        public InputAction @plant1 => m_Wrapper.m_player_plant1;
         /// <summary>
-        /// Provides access to the underlying input action "player/equipTool".
+        /// Provides access to the underlying input action "player/plant2".
         /// </summary>
-        public InputAction @equipTool => m_Wrapper.m_player_equipTool;
+        public InputAction @plant2 => m_Wrapper.m_player_plant2;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -485,12 +485,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @mouse.started += instance.OnMouse;
             @mouse.performed += instance.OnMouse;
             @mouse.canceled += instance.OnMouse;
-            @equipPlant.started += instance.OnEquipPlant;
-            @equipPlant.performed += instance.OnEquipPlant;
-            @equipPlant.canceled += instance.OnEquipPlant;
-            @equipTool.started += instance.OnEquipTool;
-            @equipTool.performed += instance.OnEquipTool;
-            @equipTool.canceled += instance.OnEquipTool;
+            @plant1.started += instance.OnPlant1;
+            @plant1.performed += instance.OnPlant1;
+            @plant1.canceled += instance.OnPlant1;
+            @plant2.started += instance.OnPlant2;
+            @plant2.performed += instance.OnPlant2;
+            @plant2.canceled += instance.OnPlant2;
         }
 
         /// <summary>
@@ -514,12 +514,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @mouse.started -= instance.OnMouse;
             @mouse.performed -= instance.OnMouse;
             @mouse.canceled -= instance.OnMouse;
-            @equipPlant.started -= instance.OnEquipPlant;
-            @equipPlant.performed -= instance.OnEquipPlant;
-            @equipPlant.canceled -= instance.OnEquipPlant;
-            @equipTool.started -= instance.OnEquipTool;
-            @equipTool.performed -= instance.OnEquipTool;
-            @equipTool.canceled -= instance.OnEquipTool;
+            @plant1.started -= instance.OnPlant1;
+            @plant1.performed -= instance.OnPlant1;
+            @plant1.canceled -= instance.OnPlant1;
+            @plant2.started -= instance.OnPlant2;
+            @plant2.performed -= instance.OnPlant2;
+            @plant2.canceled -= instance.OnPlant2;
         }
 
         /// <summary>
@@ -589,18 +589,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMouse(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "equipPlant" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "plant1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnEquipPlant(InputAction.CallbackContext context);
+        void OnPlant1(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "equipTool" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "plant2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnEquipTool(InputAction.CallbackContext context);
+        void OnPlant2(InputAction.CallbackContext context);
     }
 }

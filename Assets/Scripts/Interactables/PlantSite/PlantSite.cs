@@ -67,16 +67,15 @@ public class PlantSite : MonoBehaviour, ICanInteract
 
     public void Interact(Player player)
     {
-        if (player.HasEquippedPlant())
+        if (player.HasEquippedPlant() && activePlant == null)
         {
-            //player is carrying a plant
-            SetPlant(player.GetEquippedPlant());    
+            //player is carrying a plant and this site is empty
+            SetPlant(player.GetEquippedPlant());
         }
         if (player.HasEquippedTool() && activePlant != null)
         {
             //water plant and make it start growing
             plantIsGrowing = true;
-            Debug.Log("Plant watered");
         }
         else
         {
