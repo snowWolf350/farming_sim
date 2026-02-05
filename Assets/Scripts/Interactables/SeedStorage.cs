@@ -6,10 +6,10 @@ public class SeedStorage : MonoBehaviour,ICanInteract
 
     public void Interact(Player player)
     {
-        if (player.CheckPlantInInventory(plantSO, out int itemIndex))
+        if (player.inventory.CheckPlantInInventory(plantSO, out int itemIndex))
         {
             //player has this plant in his inventory
-            player.IncreaseItemCountAt(itemIndex);
+            player.inventory.IncreaseItemCountAt(itemIndex);
         }
         else
         {
@@ -18,7 +18,7 @@ public class SeedStorage : MonoBehaviour,ICanInteract
             //repositions seed into the interact transform
             plantGO.transform.localPosition = Vector3.zero;
             // sets and equips the current plant
-            player.EquipNewPlant(plantGO.GetComponent<Plant>());
+            player.inventory.EquipNewPlant(plantGO.GetComponent<Plant>());
         }
     }
     
