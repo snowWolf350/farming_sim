@@ -17,6 +17,7 @@ public class SeedStorage : MonoBehaviour,ICanInteract
             GameObject plantGO = Instantiate(plantSO.plantPrefab, player.GetInteractSpawn());
             //repositions seed into the interact transform
             plantGO.transform.localPosition = Vector3.zero;
+            plantGO.transform.localRotation = Quaternion.identity;
             // sets and equips the current plant
             player.inventory.EquipNewPlant(plantGO.GetComponent<Plant>());
         }

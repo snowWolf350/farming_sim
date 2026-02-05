@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-public class PlantSite : MonoBehaviour, ICanInteract
+public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
 {
     [SerializeField] Transform spawnTransform;
 
@@ -25,6 +26,8 @@ public class PlantSite : MonoBehaviour, ICanInteract
     GameObject halfDevelopedGameobject;
     GameObject fullDevelopedGameobject;
 
+    public event EventHandler<IHasProgress.onProgressChangedEventArgs> onProgressChanged;
+
     private void Update()
     {
         if (activePlant != null && plantIsGrowing)
@@ -37,6 +40,11 @@ public class PlantSite : MonoBehaviour, ICanInteract
                             activePlant.gameObject.SetActive(false);
                             //plant is watered
                             seed_halfDevelopedTimer += Time.deltaTime;
+
+                        onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
+                        {
+                            progressNormalized = seed_halfDevelopedTimer / seed_halfDevelopedTimerMax
+                        });
                             if (seed_halfDevelopedTimer > seed_halfDevelopedTimerMax)
                             {
                                 currentGrowthLevel = GrowthLevel.halfDeveloped;
@@ -47,7 +55,12 @@ public class PlantSite : MonoBehaviour, ICanInteract
                 case GrowthLevel.halfDeveloped:
                     {
                             seed_fullDevelopedTimer += Time.deltaTime;
-                            if (seed_fullDevelopedTimer > seed_fullfDevelopedTimerMax)
+
+                        onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
+                        {
+                            progressNormalized = seed_fullDevelopedTimer / seed_fullfDevelopedTimerMax
+                        });
+                        if (seed_fullDevelopedTimer > seed_fullfDevelopedTimerMax)
                             {
                                 currentGrowthLevel = GrowthLevel.fullDeveloped;
                                 Destroy(halfDevelopedGameobject);
@@ -56,6 +69,10 @@ public class PlantSite : MonoBehaviour, ICanInteract
                     }
                     break;
                 case GrowthLevel.fullDeveloped:
+                    onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
+                    {
+                        progressNormalized = 0
+                    });
                     break;
             }
         }

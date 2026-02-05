@@ -28,6 +28,7 @@ public class Tools : MonoBehaviour, ICanInteract
     {
         gameObject.transform.SetParent(transform);
         gameObject.transform.localPosition = Vector3.zero;
+        gameObject.transform.localRotation = Quaternion.identity;
     }
 
     public bool ToolIsWaterCan()
