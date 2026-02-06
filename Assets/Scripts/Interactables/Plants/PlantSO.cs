@@ -8,4 +8,6 @@ public class PlantSO : ScriptableObject
     public GameObject seedVisual;
     public GameObject fullyDevelopedVisual;
     public GameObject halfDevelopedVisual;
+    public Sprite plantIcon;
+    public Sprite SeedIcon;
 }

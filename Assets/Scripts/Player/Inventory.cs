@@ -42,8 +42,18 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     List<toolItem> toolItemList;
 
+    public event EventHandler<onPlantItemAddedEventArgs> onPlantItemAdded;
+
+    public class onPlantItemAddedEventArgs : EventArgs
+    {
+        public Sprite plantSprite;
+        public int plantItemCount;
+        public int inventoryIndex;
+    }
+
     private void Awake()
     {
+        Instance = this;
         plantItemlist = new List<plantItem>();
         toolItemList = new List<toolItem>();
     }
@@ -77,11 +87,24 @@ public class Inventory : MonoBehaviour
         {
             //player has this plant item in inventory
             plantItemlist[itemIndex].IncreaseCount();
+            onPlantItemAdded?.Invoke(this, new onPlantItemAddedEventArgs
+            {
+                plantItemCount = plantItemlist[itemIndex].itemCount,
+                plantSprite = plantItemlist[itemIndex].plant.GetPlantSO().plantIcon,
+                inventoryIndex = itemIndex
+            });
         }
         else
         {
+            //player does not have this in his inventory adding a new one
             plantItem plantitem = new(plant, 1);
             plantItemlist.Add(plantitem);
+            onPlantItemAdded?.Invoke(this, new onPlantItemAddedEventArgs
+            {
+                plantItemCount = plantitem.itemCount,
+                plantSprite = plantitem.plant.GetPlantSO().plantIcon,
+                inventoryIndex = plantItemlist.Count - 1
+            });
         }
     }
     public void RemovePlantInList(Plant plant)
@@ -156,9 +179,15 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    public void IncreaseItemCountAt(int count)
+    public void IncreaseItemCountAt(int itemIndex)
     {
-        plantItemlist[count].IncreaseCount();
+        plantItemlist[itemIndex].IncreaseCount();
+        onPlantItemAdded?.Invoke(this, new onPlantItemAddedEventArgs
+        {
+            plantItemCount = plantItemlist[itemIndex].itemCount,
+            plantSprite = plantItemlist[itemIndex].plant.GetPlantSO().plantIcon,
+            inventoryIndex = itemIndex
+        });
     }
 
     public void EquipNewPlant(Plant plant)
@@ -175,7 +204,7 @@ public class Inventory : MonoBehaviour
         Player.SetEquippedTool(tool);
         toggleEqupipedItem(tool);
 
-        //if not present add in list
+        // add in list
         AddToolInList(tool);
     }
 

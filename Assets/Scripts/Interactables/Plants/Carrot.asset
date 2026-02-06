@@ -17,3 +17,5 @@ MonoBehaviour:
   seedVisual: {fileID: 0}
   fullyDevelopedVisual: {fileID: 0}
   halfDevelopedVisual: {fileID: 0}
+  plantIcon: {fileID: 21300000, guid: 9a79f4b755444274c8a54724048976a1, type: 3}
+  SeedIcon: {fileID: 21300000, guid: 9a79f4b755444274c8a54724048976a1, type: 3}
