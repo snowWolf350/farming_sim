@@ -80,6 +80,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WateringCan
       objectReference: {fileID: 0}
+    - target: {fileID: 2290203064106678588, guid: e3686dbded7fd7948a95ef538bf749ba, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3259120505404153744, guid: e3686dbded7fd7948a95ef538bf749ba, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Carrot
   m_EditorClassIdentifier: Assembly-CSharp::PlantSO
   plantName: Carrot
-  plantPrefab: {fileID: 0}
-  seedVisual: {fileID: 0}
-  fullyDevelopedVisual: {fileID: 0}
-  halfDevelopedVisual: {fileID: 0}
+  plantPrefab: {fileID: 7215055271819641004, guid: 4171b8ce2ce0a5f4196a76b5dbad66a9, type: 3}
+  seedVisual: {fileID: 3769895432225219517, guid: 552c6b3435866ff43bafe4d0a669b7bb, type: 3}
+  fullyDevelopedVisual: {fileID: 2989837774607706810, guid: fedcea806fe90ec48aa2cd021f32eb06, type: 3}
+  halfDevelopedVisual: {fileID: 4388122434286578442, guid: 760eb55cc68fee847b532040cbe028d8, type: 3}
   plantIcon: {fileID: 21300000, guid: 9a79f4b755444274c8a54724048976a1, type: 3}
-  SeedIcon: {fileID: 21300000, guid: 9a79f4b755444274c8a54724048976a1, type: 3}
+  SeedIcon: {fileID: 21300000, guid: 921a2ca74d49a4e41812b1bd9c6e6f64, type: 3}

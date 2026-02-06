@@ -81,14 +81,26 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
 
     public void Interact(Player player)
     {
-        if (Player.HasEquippedPlant() && activePlant == null)
+        if (Player.GetEquippedInteractable() is Plant && activePlant == null)
         {
             //player is carrying a plant and this site is empty
             player.inventory.RemovePlantInList(player.GetEquippedPlant());
-            SetPlant(player.GetEquippedPlant());
-            Player.SetEquippedPlant(null);
+
+            if (player.inventory.GetPlantItemCount(player.GetEquippedPlant()) > 1)
+            {
+                //player has multiple seeds 
+                GameObject plantGO = Instantiate(player.GetEquippedPlant().GetPlantSO().plantPrefab, spawnTransform);
+                SetPlant(plantGO.GetComponent<Plant>());
+            }
+            else
+            {
+                //player has one seed
+                SetPlant(player.GetEquippedPlant());
+                Player.SetEquippedPlant(null);
+            }
+
         }
-        if (player.HasEquippedTool() && activePlant != null)
+        if (Player.GetEquippedInteractable() is Tools && activePlant != null)
         {
             //water plant and make it start growing
             plantIsGrowing = true;

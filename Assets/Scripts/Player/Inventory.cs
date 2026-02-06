@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static Inventory;
 
 public class Inventory : MonoBehaviour
 {
     public static Inventory Instance;
 
     [Serializable]
-    class plantItem
+    public class plantItem
     {
         public Plant plant;
         public int itemCount;
@@ -20,6 +21,11 @@ public class Inventory : MonoBehaviour
         public void IncreaseCount()
         {
             itemCount++;
+        }
+        public void DecreaseCount()
+        {
+            if(itemCount >=1)
+            itemCount--;
         }
     }
 
@@ -42,13 +48,11 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     List<toolItem> toolItemList;
 
-    public event EventHandler<onPlantItemAddedEventArgs> onPlantItemAdded;
+    public event EventHandler<onPlantItemAddedEventArgs> onPlantItemListChanged;
 
     public class onPlantItemAddedEventArgs : EventArgs
     {
-        public Sprite plantSprite;
-        public int plantItemCount;
-        public int inventoryIndex;
+        public List<plantItem> passedPlantItemList;
     }
 
     private void Awake()
@@ -87,32 +91,35 @@ public class Inventory : MonoBehaviour
         {
             //player has this plant item in inventory
             plantItemlist[itemIndex].IncreaseCount();
-            onPlantItemAdded?.Invoke(this, new onPlantItemAddedEventArgs
-            {
-                plantItemCount = plantItemlist[itemIndex].itemCount,
-                plantSprite = plantItemlist[itemIndex].plant.GetPlantSO().plantIcon,
-                inventoryIndex = itemIndex
-            });
         }
         else
         {
             //player does not have this in his inventory adding a new one
             plantItem plantitem = new(plant, 1);
             plantItemlist.Add(plantitem);
-            onPlantItemAdded?.Invoke(this, new onPlantItemAddedEventArgs
-            {
-                plantItemCount = plantitem.itemCount,
-                plantSprite = plantitem.plant.GetPlantSO().plantIcon,
-                inventoryIndex = plantItemlist.Count - 1
-            });
         }
+        onPlantItemListChanged?.Invoke(this, new onPlantItemAddedEventArgs
+        {
+            passedPlantItemList = plantItemlist
+        });
     }
     public void RemovePlantInList(Plant plant)
     {
         if (CheckPlantInInventory(plant.GetPlantSO(), out int itemIndex))
         {
             //player has this plant item in inventory
-            plantItemlist.RemoveAt(itemIndex);
+            if (plantItemlist[itemIndex].itemCount > 1)
+            {
+                plantItemlist[itemIndex].DecreaseCount();
+            }
+            else
+            {
+                plantItemlist.RemoveAt(itemIndex);
+            }
+            onPlantItemListChanged?.Invoke(this, new onPlantItemAddedEventArgs
+            {
+                passedPlantItemList = plantItemlist
+            });
         }
         else
         {
@@ -182,11 +189,18 @@ public class Inventory : MonoBehaviour
     public void IncreaseItemCountAt(int itemIndex)
     {
         plantItemlist[itemIndex].IncreaseCount();
-        onPlantItemAdded?.Invoke(this, new onPlantItemAddedEventArgs
+        onPlantItemListChanged?.Invoke(this, new onPlantItemAddedEventArgs
         {
-            plantItemCount = plantItemlist[itemIndex].itemCount,
-            plantSprite = plantItemlist[itemIndex].plant.GetPlantSO().plantIcon,
-            inventoryIndex = itemIndex
+            passedPlantItemList = plantItemlist
+        });
+    }
+
+    public void DecreaseItemCountAt(int itemIndex)
+    {
+        plantItemlist[itemIndex].IncreaseCount();
+        onPlantItemListChanged?.Invoke(this, new onPlantItemAddedEventArgs
+        {
+            passedPlantItemList = plantItemlist
         });
     }
 
@@ -210,11 +224,11 @@ public class Inventory : MonoBehaviour
 
     public void toggleEqupipedItem(ICanInteract iCanInteract)
     {
-        if (Player.GetEquippedInteractable() is Plant)
+        if (iCanInteract is Plant)
         {
             Plant plant = iCanInteract as Plant;
             //player has equipped plant
-
+            Player.SetEquippedPlant(plant);
             foreach (Transform child in plant.transform.parent)
             {
                 if (child.GetComponent<Plant>() == plant)
@@ -227,7 +241,7 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
-        if (Player.GetEquippedInteractable() is Tools)
+        if (iCanInteract is Tools)
         {
             Tools tool = iCanInteract as Tools;
             //player has equipped plant

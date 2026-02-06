@@ -39,9 +39,6 @@ public class Player : MonoBehaviour
     {
         public ICanInteract Interactable;
     }
-
-    
-
     void Start()
     {
         characterController = GetComponent<CharacterController>();
