@@ -15,7 +15,9 @@ public class GameInput : MonoBehaviour
     public event EventHandler OnPlant2Equipped;
 
     //camera
+    Vector2 mouseInputVector;
     float mouseSensitivity = 25;
+
 
     private void Awake()
     {
@@ -39,6 +41,7 @@ public class GameInput : MonoBehaviour
         playerInput.player.plant2.performed += Plant2_performed;
 
         Cursor.lockState = CursorLockMode.Locked;
+
     }
 
     private void Plant2_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -70,7 +73,7 @@ public class GameInput : MonoBehaviour
 
     public Vector2 GetMouseDelta()
     {
-        Vector2 mouseInputVector = playerInput.player.mouse.ReadValue<Vector2>();
+        mouseInputVector = playerInput.player.mouse.ReadValue<Vector2>();
         return new Vector2(mouseInputVector.x * mouseSensitivity * Time.deltaTime,mouseInputVector.y * mouseSensitivity * Time.deltaTime);
     }
 }

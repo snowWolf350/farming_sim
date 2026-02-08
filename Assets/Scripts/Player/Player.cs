@@ -15,8 +15,8 @@ public class Player : MonoBehaviour
     Vector3 upwardVelocity;
 
     //camera
-    private float xRotation;
-    private float yRotation;
+    private float xRotation = 0 ;
+    private float yRotation = 0;
 
     //interact
 
@@ -43,7 +43,6 @@ public class Player : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         inventory = GetComponent<Inventory>();
-
         //input events
 
         GameInput.Instance.OnJump += GameInput_OnJump;
@@ -59,7 +58,7 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
-        HandleCamera();
+        //HandleCamera();
         HandleInteract();
     }
 
@@ -95,7 +94,6 @@ public class Player : MonoBehaviour
         xRotation -= mouseInput.y;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
         yRotation += mouseInput.x;
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
         // horizontal look
         transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
