@@ -22,14 +22,6 @@ public class GameInput : MonoBehaviour
     private void Awake()
     {
         playerInput = new PlayerInput();
-
-        playerInput.player.move.Enable();
-        playerInput.player.jump.Enable();
-        playerInput.player.interact.Enable();
-        playerInput.player.mouse.Enable();
-        playerInput.player.plant1.Enable();
-        playerInput.player.plant2.Enable();
-
         Instance = this;
     }
 
@@ -39,8 +31,15 @@ public class GameInput : MonoBehaviour
         playerInput.player.interact.performed += Interact_performed;
         playerInput.player.plant1.performed += Plant1_performed;
         playerInput.player.plant2.performed += Plant2_performed;
-
         Cursor.lockState = CursorLockMode.Locked;
+
+
+        playerInput.player.move.Enable();
+        playerInput.player.jump.Enable();
+        playerInput.player.interact.Enable();
+        playerInput.player.mouse.Enable();
+        playerInput.player.plant1.Enable();
+        playerInput.player.plant2.Enable();
 
     }
 

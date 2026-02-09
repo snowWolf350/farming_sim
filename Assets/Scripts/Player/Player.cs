@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     //camera
     private float xRotation = 0 ;
     private float yRotation = 0;
+    bool mouseReady = false;
 
     //interact
 
@@ -45,6 +46,9 @@ public class Player : MonoBehaviour
         inventory = GetComponent<Inventory>();
         //input events
 
+        xRotation = 0f;
+        yRotation = transform.eulerAngles.y;
+
         GameInput.Instance.OnJump += GameInput_OnJump;
         GameInput.Instance.OnInteract += GameInput_OnInteract;
        
@@ -58,7 +62,13 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
-        //HandleCamera();
+        if (!mouseReady)
+        {
+            mouseReady = true;
+            return;
+        }
+
+        HandleCamera();
         HandleInteract();
     }
 

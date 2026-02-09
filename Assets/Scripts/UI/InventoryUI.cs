@@ -5,15 +5,33 @@ using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
+    [Header("Plants")]
     [SerializeField] List<Image> plantImageList;
     [SerializeField] List<TextMeshProUGUI> plantCountTextList;
+    [Header("Tools")]
+    [SerializeField] List<Image> toolImageList;
 
     private void Start()
     {
         Inventory.Instance.onPlantItemListChanged += Inventory_onPlantItemChanged;
-        ClearAllInventory();
+        Inventory.Instance.onToolItemListChanged += Inventory_onToolItemListChanged;
+        ClearPlantInventory();
+        ClearToolInventory();
     }
 
+    private void Inventory_onToolItemListChanged(object sender, Inventory.onToolItemAddedEventArgs e)
+    {
+        for (int i = 0; i < e.passedToolItemList.Count; i++)
+        {
+            toolImageList[i].sprite = e.passedToolItemList[i].tool.GetToolSO().toolSprite;
+            toolImageList[i].enabled = true;
+        }
+
+        for (int i = e.passedToolItemList.Count; i < toolImageList.Count; i++)
+        {
+            toolImageList[i].enabled = false;
+        }
+    }
 
     private void Inventory_onPlantItemChanged(object sender, Inventory.onPlantItemAddedEventArgs e)
     {
@@ -34,7 +52,7 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    void ClearAllInventory()
+    void ClearPlantInventory()
     {
         foreach (Image image in plantImageList)
         {
@@ -45,5 +63,12 @@ public class InventoryUI : MonoBehaviour
             text.enabled = false;
         }
         
+    }
+    void ClearToolInventory()
+    {
+        foreach (Image image in toolImageList)
+        {
+            image.enabled = false;
+        }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using static Inventory;
 
@@ -30,7 +31,7 @@ public class Inventory : MonoBehaviour
     }
 
     [Serializable]
-    class toolItem
+    public class toolItem
     {
         public Tools tool;
         public float itemDurability;
@@ -49,10 +50,15 @@ public class Inventory : MonoBehaviour
     List<toolItem> toolItemList;
 
     public event EventHandler<onPlantItemAddedEventArgs> onPlantItemListChanged;
+    public event EventHandler<onToolItemAddedEventArgs> onToolItemListChanged;
 
     public class onPlantItemAddedEventArgs : EventArgs
     {
         public List<plantItem> passedPlantItemList;
+    }
+    public class onToolItemAddedEventArgs : EventArgs
+    {
+        public List<toolItem> passedToolItemList;
     }
 
     private void Awake()
@@ -123,23 +129,49 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            Debug.LogError("plant is not in list");
+            Debug.LogError("tool is not in list");
         }
     }
     public void AddToolInList(Tools tool)
     {
-        if (CheckToolInInventory(tool, out int itemIndex))
+        if (CheckToolInInventory(tool.GetToolSO(), out int itemIndex))
         {
-            //player has this plant item in inventory
-            plantItemlist[itemIndex].IncreaseCount();
+            //player has this tool item in inventory
+            
         }
         else
         {
             toolItem toolitem = new(tool, 1);
             toolItemList.Add(toolitem);
         }
+        onToolItemListChanged?.Invoke(this, new onToolItemAddedEventArgs
+        {
+            passedToolItemList = toolItemList
+        });
     }
-
+    public void RemoveToolInList(Tools tool)
+    {
+        if (CheckToolInInventory(tool.GetToolSO(), out int itemIndex))
+        {
+            //player has this plant item in inventory
+            if (plantItemlist[itemIndex].itemCount > 1)
+            {
+                plantItemlist[itemIndex].DecreaseCount();
+            }
+            else
+            {
+                plantItemlist.RemoveAt(itemIndex);
+            }
+            onPlantItemListChanged?.Invoke(this, new onPlantItemAddedEventArgs
+            {
+                passedPlantItemList = plantItemlist
+            });
+        }
+        else
+        {
+            Debug.LogError("tool is not in list");
+        }
+    }
     public int GetPlantItemCount(Plant plant)
     {
         if (CheckPlantInInventory(plant.GetPlantSO(), out int itemIndex))
@@ -163,12 +195,12 @@ public class Inventory : MonoBehaviour
         itemIndex = 0;
         return false;
     }
-    public bool CheckToolInInventory(Tools tool, out int itemIndex)
+    public bool CheckToolInInventory(ToolsSO toolSO, out int itemIndex)
     {
         for (int i = 0; i < toolItemList.Count; i++)
         {
             //cycle through inventory
-            if (toolItemList[i].tool == tool)
+            if (toolItemList[i].tool.GetToolSO() == toolSO)
             {
                 itemIndex = i;
                 return true;

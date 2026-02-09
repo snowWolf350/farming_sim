@@ -3,15 +3,10 @@ using UnityEngine;
 
 public class Tools : MonoBehaviour, ICanInteract
 {
-    public enum toolType
-    {
-        wateringCan
-    }
-
-    [SerializeField] toolType thistoolType;
+    [SerializeField] ToolsSO toolsSO;
     public void Interact(Player player)
     {
-        if (player.inventory.CheckToolInInventory(this, out int itemIndex))
+        if (player.inventory.CheckToolInInventory(toolsSO, out int itemIndex))
         {
             //player has this tool in his inventory
             Debug.Log("player aldready has tool");
@@ -31,13 +26,9 @@ public class Tools : MonoBehaviour, ICanInteract
         gameObject.transform.localRotation = Quaternion.identity;
     }
 
-    public bool ToolIsWaterCan()
+    public ToolsSO GetToolSO()
     {
-        if (thistoolType == toolType.wateringCan)
-        {
-            return true;
-        }
-        return false;
+        return toolsSO;
     }
 
     private void DestroySelf()

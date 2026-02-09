@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92560aac8f7011d4aaf2774d35c9a34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tools
-  thistoolType: 0
+  toolsSO: {fileID: 11400000, guid: cef47e63442a52e469ed412322e44e69, type: 2}
 --- !u!1001 &4885307031055338290
 PrefabInstance:
   m_ObjectHideFlags: 0
