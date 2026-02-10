@@ -24,7 +24,7 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
         if (activePlant == e.plant)
         {
             //plant removed from this site 
-            Debug.Log("plant removed");
+            plantIsGrowing = false;
             activePlant = null;
         }
     }
@@ -51,7 +51,8 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
                         });
                         if (seed_halfDevelopedTimer > activePlant.GetPlantSO().halfDevelopedTimerMax)
                         {
-                           activePlant.SetPlantGrowthLevel(Plant.GrowthLevel.halfDeveloped); 
+                           activePlant.SetPlantGrowthLevel(Plant.GrowthLevel.halfDeveloped);
+                            seed_halfDevelopedTimer = 0;
                         }
                     }
                     break;
@@ -66,6 +67,7 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
                             if (seed_fullDevelopedTimer > activePlant.GetPlantSO().fullDevelopedTimerMax)
                             {
                               activePlant.SetPlantGrowthLevel(Plant.GrowthLevel.fullDeveloped);
+                              seed_fullDevelopedTimer = 0;
                             }
                     }
                     break;

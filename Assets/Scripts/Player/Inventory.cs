@@ -19,9 +19,9 @@ public class Inventory : MonoBehaviour
             plant = newplant;
             itemCount = count;
         }
-        public void IncreaseCount()
+        public void IncreaseCount(int increaseCount = 1)
         {
-            itemCount++;
+            itemCount+= increaseCount;
         }
         public void DecreaseCount()
         {
@@ -72,6 +72,16 @@ public class Inventory : MonoBehaviour
     {
         GameInput.Instance.OnPlant1Equipped += GameInput_OnPlant1Equipped;
         GameInput.Instance.OnPlant2Equipped += GameInput_OnPlant2Equipped;
+        GameInput.Instance.OnTool1Equipped += GameInput_OnTool1Equipped;
+    }
+
+    private void GameInput_OnTool1Equipped(object sender, EventArgs e)
+    {
+        if (toolItemList.Count >= 1)
+        {
+            Player.SetEquippedTool(toolItemList[0].tool);
+            toggleEqupipedItem(toolItemList[0].tool);
+        }
     }
 
     private void GameInput_OnPlant1Equipped(object sender, EventArgs e)
@@ -91,23 +101,40 @@ public class Inventory : MonoBehaviour
             toggleEqupipedItem(plantItemlist[1].plant);
         }
     }
-    public void AddPlantInList(Plant plant)
+    public void AddPlantInList(Plant plant,int plantItemCount = 1)
     {
-        if (CheckPlantInInventory(plant.GetPlantSO(), out int itemIndex))
+        if (plant.GetCurrentGrowthLevel() == Plant.GrowthLevel.seed)
         {
-            //player has this plant item in inventory
-            plantItemlist[itemIndex].IncreaseCount();
+            if (CheckPlantInInventory(plant.GetPlantSO(), out int itemIndex))
+            {
+                //player has this plant item in inventory
+                plantItemlist[itemIndex].IncreaseCount();
+            }
+            else
+            {
+                //player does not have this in his inventory adding a new one
+                plantItem plantitem = new(plant, 1);
+                plantItemlist.Add(plantitem);
+            }
         }
         else
         {
-            //player does not have this in his inventory adding a new one
-            plantItem plantitem = new(plant, 1);
-            plantItemlist.Add(plantitem);
+            if (CheckPlantInInventory(plant.GetPlantSO(), out int itemIndex,Plant.GrowthLevel.fruit))
+            {
+                //player has this plant item in inventory
+                plantItemlist[itemIndex].IncreaseCount(plantItemCount);
+            }
+            else
+            {
+                //player does not have this in his inventory adding a new one
+                plantItem plantitem = new(plant, plantItemCount);
+                plantItemlist.Add(plantitem);
+            }
         }
-        onPlantItemListChanged?.Invoke(this, new onPlantItemAddedEventArgs
-        {
-            passedPlantItemList = plantItemlist
-        });
+            onPlantItemListChanged?.Invoke(this, new onPlantItemAddedEventArgs
+            {
+                passedPlantItemList = plantItemlist
+            });
     }
     public void RemovePlantInList(Plant plant)
     {
@@ -181,12 +208,12 @@ public class Inventory : MonoBehaviour
         return 0;
     }
 
-    public bool CheckPlantInInventory(PlantSO plantSO, out int itemIndex)
+    public bool CheckPlantInInventory(PlantSO plantSO, out int itemIndex,Plant.GrowthLevel growthLevel = Plant.GrowthLevel.seed)
     {
         for (int i = 0; i < plantItemlist.Count; i++)
         {
             //cycle through inventory
-            if (plantItemlist[i].plant.GetPlantSO() == plantSO)
+            if (plantItemlist[i].plant.GetPlantSO() == plantSO && plantItemlist[i].plant.GetCurrentGrowthLevel() == growthLevel)
             {
                 itemIndex = i;
                 return true;

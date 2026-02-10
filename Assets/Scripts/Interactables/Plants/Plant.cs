@@ -28,7 +28,7 @@ public class Plant : MonoBehaviour, ICanInteract
         fruit
     }
 
-    GrowthLevel currentGrowthLevel;
+    public GrowthLevel currentGrowthLevel;
 
     GameObject activeVisual;
 
@@ -61,22 +61,18 @@ public class Plant : MonoBehaviour, ICanInteract
             case GrowthLevel.halfDeveloped:
                 SetPlantGrowthLevel(GrowthLevel.fruit);
                 setParent(player.GetInteractSpawn());
-                Debug.Log("yield is " + UnityEngine.Random.Range(plantSO.halfYieldMin, plantSO.halfYieldMax));
-                OnPlantHarvested?.Invoke(this,new OnPlantHarvestedEventArgs
-                {
-                    plant = this,
-                });
+                player.inventory.AddPlantInList(this, UnityEngine.Random.Range(plantSO.halfYieldMin, plantSO.halfYieldMax));
                 break;
             case GrowthLevel.fullDeveloped:
                 SetPlantGrowthLevel(GrowthLevel.fruit);
                 setParent(player.GetInteractSpawn());
-                Debug.Log("yield is " + UnityEngine.Random.Range(plantSO.fullYieldMin, plantSO.fullYieldMax));
-                OnPlantHarvested?.Invoke(this, new OnPlantHarvestedEventArgs
-                {
-                    plant = this,
-                });
+                player.inventory.AddPlantInList(this, UnityEngine.Random.Range(plantSO.fullYieldMin, plantSO.fullYieldMax));
                 break;
         }
+        OnPlantHarvested?.Invoke(this, new OnPlantHarvestedEventArgs
+        {
+            plant = this,
+        });
     }
 
     public void setParent(Transform transform)

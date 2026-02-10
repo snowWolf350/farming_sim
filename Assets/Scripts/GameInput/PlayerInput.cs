@@ -145,6 +145,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""tool1"",
+                    ""type"": ""Button"",
+                    ""id"": ""bea37a6b-715d-4edd-9f77-19d591fd5fed"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -312,6 +321,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""plant2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cede814b-928b-4777-8a26-0857bb35a8df"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""tool1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -326,6 +346,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_player_mouse = m_player.FindAction("mouse", throwIfNotFound: true);
         m_player_plant1 = m_player.FindAction("plant1", throwIfNotFound: true);
         m_player_plant2 = m_player.FindAction("plant2", throwIfNotFound: true);
+        m_player_tool1 = m_player.FindAction("tool1", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -412,6 +433,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_player_mouse;
     private readonly InputAction m_player_plant1;
     private readonly InputAction m_player_plant2;
+    private readonly InputAction m_player_tool1;
     /// <summary>
     /// Provides access to input actions defined in input action map "player".
     /// </summary>
@@ -447,6 +469,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "player/plant2".
         /// </summary>
         public InputAction @plant2 => m_Wrapper.m_player_plant2;
+        /// <summary>
+        /// Provides access to the underlying input action "player/tool1".
+        /// </summary>
+        public InputAction @tool1 => m_Wrapper.m_player_tool1;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -491,6 +517,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @plant2.started += instance.OnPlant2;
             @plant2.performed += instance.OnPlant2;
             @plant2.canceled += instance.OnPlant2;
+            @tool1.started += instance.OnTool1;
+            @tool1.performed += instance.OnTool1;
+            @tool1.canceled += instance.OnTool1;
         }
 
         /// <summary>
@@ -520,6 +549,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @plant2.started -= instance.OnPlant2;
             @plant2.performed -= instance.OnPlant2;
             @plant2.canceled -= instance.OnPlant2;
+            @tool1.started -= instance.OnTool1;
+            @tool1.performed -= instance.OnTool1;
+            @tool1.canceled -= instance.OnTool1;
         }
 
         /// <summary>
@@ -602,5 +634,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPlant2(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "tool1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTool1(InputAction.CallbackContext context);
     }
 }

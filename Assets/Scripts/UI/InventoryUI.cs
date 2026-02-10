@@ -39,8 +39,15 @@ public class InventoryUI : MonoBehaviour
         
         for (int i = 0; i < e.passedPlantItemList.Count; i++)
         {
-            plantImageList[i].sprite = e.passedPlantItemList[i].plant.GetPlantSO().SeedIcon;
-            plantCountTextList[i].text = e.passedPlantItemList[i].itemCount.ToString();
+            if (e.passedPlantItemList[i].plant.GetCurrentGrowthLevel() == Plant.GrowthLevel.seed)
+            {
+                plantImageList[i].sprite = e.passedPlantItemList[i].plant.GetPlantSO().SeedIcon;
+            }
+            else
+            {
+                plantImageList[i].sprite = e.passedPlantItemList[i].plant.GetPlantSO().plantIcon;
+            }
+                plantCountTextList[i].text = e.passedPlantItemList[i].itemCount.ToString();
             plantImageList[i].enabled = true;
             plantCountTextList[i].enabled = true;
         }

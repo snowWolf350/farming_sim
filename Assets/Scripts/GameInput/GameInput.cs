@@ -13,6 +13,7 @@ public class GameInput : MonoBehaviour
     public event EventHandler OnInteract;
     public event EventHandler OnPlant1Equipped;
     public event EventHandler OnPlant2Equipped;
+    public event EventHandler OnTool1Equipped;
 
     //camera
     Vector2 mouseInputVector;
@@ -31,16 +32,24 @@ public class GameInput : MonoBehaviour
         playerInput.player.interact.performed += Interact_performed;
         playerInput.player.plant1.performed += Plant1_performed;
         playerInput.player.plant2.performed += Plant2_performed;
+        playerInput.player.tool1.performed += Tool1_performed;
         Cursor.lockState = CursorLockMode.Locked;
+    }
 
-
+    private void OnEnable()
+    {
         playerInput.player.move.Enable();
         playerInput.player.jump.Enable();
         playerInput.player.interact.Enable();
         playerInput.player.mouse.Enable();
         playerInput.player.plant1.Enable();
         playerInput.player.plant2.Enable();
-
+        playerInput.player.tool1.Enable();
+    }
+   
+    private void Tool1_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnTool1Equipped?.Invoke(this, EventArgs.Empty);
     }
 
     private void Plant2_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)

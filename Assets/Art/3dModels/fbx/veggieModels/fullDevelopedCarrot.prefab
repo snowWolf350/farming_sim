@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 7842573461154662656}
   - component: {fileID: 354730884676462401}
   - component: {fileID: 7733195922095411035}
+  - component: {fileID: 5257890603489619048}
+  - component: {fileID: 3602784321297726914}
   m_Layer: 0
   m_Name: fullDevelopedCarrot
   m_TagString: Untagged
@@ -91,3 +93,33 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5257890603489619048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2989837774607706810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6345ef877b01b2e409955d35722d8778, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::selectedInteractable
+--- !u!114 &3602784321297726914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2989837774607706810}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Outline
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2.09
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
