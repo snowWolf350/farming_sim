@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
@@ -8,67 +9,67 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
     Plant activePlant;
     bool plantIsGrowing;
 
-    public enum GrowthLevel
-    {
-        seed,
-        halfDeveloped,
-        fullDeveloped
-    }
-
-    GrowthLevel currentGrowthLevel;
-
     float seed_halfDevelopedTimer;
-    float seed_halfDevelopedTimerMax = 5f;
-
     float seed_fullDevelopedTimer;
-    float seed_fullfDevelopedTimerMax = 5f;
-
-    GameObject halfDevelopedGameobject;
-    GameObject fullDevelopedGameobject;
 
     public event EventHandler<IHasProgress.onProgressChangedEventArgs> onProgressChanged;
+
+    private void Start()
+    {
+        Plant.OnPlantHarvested += Plant_OnPlantHarvested;
+    }
+
+    private void Plant_OnPlantHarvested(object sender, Plant.OnPlantHarvestedEventArgs e)
+    {
+        if (activePlant == e.plant)
+        {
+            //plant removed from this site 
+            Debug.Log("plant removed");
+            activePlant = null;
+        }
+    }
 
     private void Update()
     {
         if (activePlant != null && plantIsGrowing)
         {
-            switch (currentGrowthLevel)
+            switch (activePlant.GetCurrentGrowthLevel())
             {
-                case GrowthLevel.seed:
+                case Plant.GrowthLevel.seed:
                     {
                         //plant is a seed
-                            activePlant.gameObject.SetActive(false);
-                            //plant is watered
-                            seed_halfDevelopedTimer += Time.deltaTime;
+                        if (seed_halfDevelopedTimer == 0)
+                        {
+                            activePlant.ClearVisual();
+                        }
+                         //plant is watered
+                        seed_halfDevelopedTimer += Time.deltaTime;
 
                         onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
                         {
-                            progressNormalized = seed_halfDevelopedTimer / seed_halfDevelopedTimerMax
+                            progressNormalized = seed_halfDevelopedTimer / activePlant.GetPlantSO().halfDevelopedTimerMax
                         });
-                            if (seed_halfDevelopedTimer > seed_halfDevelopedTimerMax)
-                            {
-                                currentGrowthLevel = GrowthLevel.halfDeveloped;
-                                halfDevelopedGameobject = Instantiate(activePlant.GetPlantSO().halfDevelopedVisual, spawnTransform);
-                            }
+                        if (seed_halfDevelopedTimer > activePlant.GetPlantSO().halfDevelopedTimerMax)
+                        {
+                           activePlant.SetPlantGrowthLevel(Plant.GrowthLevel.halfDeveloped); 
+                        }
                     }
                     break;
-                case GrowthLevel.halfDeveloped:
+                case Plant.GrowthLevel.halfDeveloped:
                     {
                             seed_fullDevelopedTimer += Time.deltaTime;
 
-                        onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
-                        {
-                            progressNormalized = seed_fullDevelopedTimer / seed_fullfDevelopedTimerMax
-                        });
-                        if (seed_fullDevelopedTimer > seed_fullfDevelopedTimerMax)
+                            onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
                             {
-                                currentGrowthLevel = GrowthLevel.fullDeveloped;
-                                Destroy(halfDevelopedGameobject);
-                                fullDevelopedGameobject = Instantiate(activePlant.GetPlantSO().fullyDevelopedVisual, spawnTransform);
+                            progressNormalized = seed_fullDevelopedTimer / activePlant.GetPlantSO().fullDevelopedTimerMax
+                            });
+                            if (seed_fullDevelopedTimer > activePlant.GetPlantSO().fullDevelopedTimerMax)
+                            {
+                              activePlant.SetPlantGrowthLevel(Plant.GrowthLevel.fullDeveloped);
                             }
                     }
                     break;
-                case GrowthLevel.fullDeveloped:
+                case Plant.GrowthLevel.fullDeveloped:
                     onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
                     {
                         progressNormalized = 0
@@ -114,7 +115,7 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
 
     public void SetPlant(Plant plant)
     {
-        if (currentGrowthLevel == GrowthLevel.seed)
+        if (plant.GetCurrentGrowthLevel() == Plant.GrowthLevel.seed)
         {
             activePlant = plant;
             activePlant.setParent(spawnTransform);

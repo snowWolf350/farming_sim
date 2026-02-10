@@ -17,5 +17,12 @@ MonoBehaviour:
   seedVisual: {fileID: 8497704490357152794, guid: b600e3cedb66b3b42ad225ff9f56d46e, type: 3}
   fullyDevelopedVisual: {fileID: 7908670921014708049, guid: c1822fe571e46654d9b2f620a4b46f69, type: 3}
   halfDevelopedVisual: {fileID: 1384705560966705468, guid: 231b44e2e2cce4443a612545fe69f16d, type: 3}
+  fruitVisual: {fileID: 9008139590366256107, guid: 19d2e2d4d0e5e8845a8ba7c324c5fc48, type: 3}
   plantIcon: {fileID: 21300000, guid: 9a79f4b755444274c8a54724048976a1, type: 3}
   SeedIcon: {fileID: 21300000, guid: 9a79f4b755444274c8a54724048976a1, type: 3}
+  halfDevelopedTimerMax: 3
+  fullDevelopedTimerMax: 3
+  halfYieldMax: 4
+  halfYieldMin: 1
+  fullYieldMax: 10
+  fullYieldMin: 5

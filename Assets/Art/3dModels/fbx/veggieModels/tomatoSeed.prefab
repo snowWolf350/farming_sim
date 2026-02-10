@@ -52,6 +52,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4389175395462998542, guid: b600e3cedb66b3b42ad225ff9f56d46e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4389175395462998542, guid: b600e3cedb66b3b42ad225ff9f56d46e, type: 3}
+      propertyPath: outlineWidth
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8497704490357152794, guid: b600e3cedb66b3b42ad225ff9f56d46e, type: 3}
       propertyPath: m_Name
       value: tomatoSeed
