@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,8 @@ public class InventoryUI : MonoBehaviour
 {
     [Header("Plants")]
     [SerializeField] List<Image> plantImageList;
+    [SerializeField] List<Image> plantImageBackgroundList;
+    public Color equippedBackgroundColor;
     [SerializeField] List<TextMeshProUGUI> plantCountTextList;
     [Header("Tools")]
     [SerializeField] List<Image> toolImageList;
@@ -57,6 +60,23 @@ public class InventoryUI : MonoBehaviour
             plantImageList[i].enabled = false ;
             plantCountTextList[i].enabled = false;
         }
+
+        for (int i = 0; i < e.passedPlantItemList.Count; i++)
+        {
+            if (e.passedPlantItemList[i].plant == Player.Instance.GetEquippedInteractable() as Plant)
+            {
+                plantImageBackgroundList[i].color = equippedBackgroundColor;
+            }
+            else
+            {
+                plantImageBackgroundList[i].color = Color.black;
+            }
+        }
+        for (int i = e.passedPlantItemList.Count; i < plantImageBackgroundList.Count; i++)
+        {
+            plantImageBackgroundList[i].color = Color.black;
+        }
+
     }
 
     void ClearPlantInventory()

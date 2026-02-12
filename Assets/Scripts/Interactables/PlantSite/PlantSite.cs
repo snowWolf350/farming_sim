@@ -26,6 +26,12 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
             //plant removed from this site 
             plantIsGrowing = false;
             activePlant = null;
+            onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
+            {
+                progressNormalized = 0
+            });
+            seed_fullDevelopedTimer = 0;
+            seed_halfDevelopedTimer = 0;
         }
     }
 
@@ -52,7 +58,7 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
                         if (seed_halfDevelopedTimer > activePlant.GetPlantSO().halfDevelopedTimerMax)
                         {
                            activePlant.SetPlantGrowthLevel(Plant.GrowthLevel.halfDeveloped);
-                            seed_halfDevelopedTimer = 0;
+                           seed_halfDevelopedTimer = 0;
                         }
                     }
                     break;
@@ -79,12 +85,13 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
                     break;
             }
         }
+
         
     }
 
     public void Interact(Player player)
     {
-        if (Player.GetEquippedInteractable() is Plant && activePlant == null)
+        if (Player.Instance.GetEquippedInteractable() is Plant && activePlant == null)
         {
             //player is carrying a plant and this site is empty
             if (player.inventory.GetPlantItemCount(player.GetEquippedPlant()) > 1)
@@ -100,11 +107,10 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
 
                 SetPlant(player.GetEquippedPlant());
                 player.inventory.RemovePlantInList(player.GetEquippedPlant());
-                Player.SetEquippedPlant(null);
             }
 
         }
-        if (Player.GetEquippedInteractable() is Tools && activePlant != null)
+        if (Player.Instance.GetEquippedInteractable() is Tools && activePlant != null)
         {
             //water plant and make it start growing
             plantIsGrowing = true;

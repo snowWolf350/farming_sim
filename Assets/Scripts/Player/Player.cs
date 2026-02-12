@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
+    public static Player Instance;
 
     //Movement WASD
     CharacterController characterController;
@@ -26,10 +27,10 @@ public class Player : MonoBehaviour
     RaycastHit interactHit;
     
     ICanInteract Interactable;
-    static ICanInteract equippedInteractable;
+    [SerializeField]ICanInteract equippedInteractable;
 
-    static Plant equippedPlant;
-    static Tools equippedTool;
+    [SerializeField] Plant equippedPlant;
+    [SerializeField] Tools equippedTool;
     [SerializeField] Transform interactSpawnTransform;
 
     public Inventory inventory;
@@ -40,6 +41,12 @@ public class Player : MonoBehaviour
     {
         public ICanInteract Interactable;
     }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -179,7 +186,7 @@ public class Player : MonoBehaviour
     
     
 
-    public static bool HasEquippedPlant()
+    public bool HasEquippedPlant()
     {
         if (equippedPlant != null)
         {
@@ -193,19 +200,19 @@ public class Player : MonoBehaviour
         return equippedPlant;
     }
 
-    public static void SetEquippedPlant(Plant plant)
+    public void SetEquippedPlant(Plant plant)
     {
         equippedPlant = plant;
         equippedInteractable = equippedPlant;
     }
 
-    public static void SetEquippedTool(Tools tool)
+    public void SetEquippedTool(Tools tool)
     {
         equippedTool = tool;
         equippedInteractable = equippedTool;
     }
 
-    public static ICanInteract GetEquippedInteractable()
+    public ICanInteract GetEquippedInteractable()
     {
         return equippedInteractable;
     }
