@@ -2103,6 +2103,9 @@ MonoBehaviour:
   toolImageList:
   - {fileID: 583079515}
   - {fileID: 1937542111}
+  ToolImageBackgroundList:
+  - {fileID: 1194622203}
+  - {fileID: 1139072664}
 --- !u!1 &808333480
 GameObject:
   m_ObjectHideFlags: 0

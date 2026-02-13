@@ -13,7 +13,11 @@ public class GameInput : MonoBehaviour
     public event EventHandler OnInteract;
     public event EventHandler OnPlant1Equipped;
     public event EventHandler OnPlant2Equipped;
+    public event EventHandler OnPlant3Equipped;
+    public event EventHandler OnPlant4Equipped;
+    public event EventHandler OnPlant5Equipped;
     public event EventHandler OnTool1Equipped;
+    public event EventHandler OnTool2Equipped;
 
     //camera
     Vector2 mouseInputVector;
@@ -32,7 +36,11 @@ public class GameInput : MonoBehaviour
         playerInput.player.interact.performed += Interact_performed;
         playerInput.player.plant1.performed += Plant1_performed;
         playerInput.player.plant2.performed += Plant2_performed;
+        playerInput.player.plant3.performed += Plant3_performed;
+        playerInput.player.plant4.performed += Plant4_performed;
+        playerInput.player.plant5.performed += Plant5_performed;
         playerInput.player.tool1.performed += Tool1_performed;
+        playerInput.player.tool2.performed += Tool2_performed;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -44,13 +52,35 @@ public class GameInput : MonoBehaviour
         playerInput.player.mouse.Enable();
         playerInput.player.plant1.Enable();
         playerInput.player.plant2.Enable();
+        playerInput.player.plant3.Enable();
+        playerInput.player.plant4.Enable();
+        playerInput.player.plant5.Enable();
         playerInput.player.tool1.Enable();
+        playerInput.player.tool2.Enable();
     }
-   
+    private void Tool2_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnTool2Equipped?.Invoke(this, EventArgs.Empty);
+    }
+
     private void Tool1_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         OnTool1Equipped?.Invoke(this, EventArgs.Empty);
     }
+    private void Plant5_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnPlant5Equipped?.Invoke(this, EventArgs.Empty);
+    }
+    private void Plant4_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnPlant4Equipped?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void Plant3_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnPlant3Equipped.Invoke(this, EventArgs.Empty);
+    }
+
 
     private void Plant2_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {

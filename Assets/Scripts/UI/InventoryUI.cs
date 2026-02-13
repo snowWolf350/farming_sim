@@ -13,6 +13,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] List<TextMeshProUGUI> plantCountTextList;
     [Header("Tools")]
     [SerializeField] List<Image> toolImageList;
+    [SerializeField] List<Image> ToolImageBackgroundList;
 
     private void Start()
     {
@@ -33,6 +34,23 @@ public class InventoryUI : MonoBehaviour
         for (int i = e.passedToolItemList.Count; i < toolImageList.Count; i++)
         {
             toolImageList[i].enabled = false;
+        }
+        for(int i = 0; i < e.passedToolItemList.Count; i++)
+        {
+            if (e.passedToolItemList[i].tool == Player.Instance.GetEquippedInteractable() as Tools)
+            {
+                //player added tool
+                ToolImageBackgroundList[i].color = equippedBackgroundColor;
+                ClearPlantInventoryBackground();
+            }
+            else
+            {
+                ToolImageBackgroundList[i].color = Color.black;
+            }
+        }
+        for (int i = e.passedToolItemList.Count; i < ToolImageBackgroundList.Count; i++)
+        {
+            ToolImageBackgroundList[i].color = Color.black;
         }
     }
 
@@ -65,7 +83,9 @@ public class InventoryUI : MonoBehaviour
         {
             if (e.passedPlantItemList[i].plant == Player.Instance.GetEquippedInteractable() as Plant)
             {
+                //player has a equipped a plant
                 plantImageBackgroundList[i].color = equippedBackgroundColor;
+                ClearToolInventoryBackground();
             }
             else
             {
@@ -77,6 +97,21 @@ public class InventoryUI : MonoBehaviour
             plantImageBackgroundList[i].color = Color.black;
         }
 
+    }
+
+    void ClearPlantInventoryBackground()
+    {
+        foreach (Image image in plantImageBackgroundList)
+        {
+            image.color = Color.black;
+        }
+    }
+    void ClearToolInventoryBackground()
+    {
+        foreach (Image image in ToolImageBackgroundList)
+        {
+            image.color = Color.black;
+        }
     }
 
     void ClearPlantInventory()
