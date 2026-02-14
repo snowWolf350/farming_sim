@@ -2123,7 +2123,7 @@ GameObject:
   - component: {fileID: 761476920}
   - component: {fileID: 761476919}
   m_Layer: 0
-  m_Name: Status
+  m_Name: StatusColor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2161,7 +2161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.6695522, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2725,6 +2725,7 @@ GameObject:
   - component: {fileID: 1055909371}
   - component: {fileID: 1055909370}
   - component: {fileID: 1055909369}
+  - component: {fileID: 1055909372}
   m_Layer: 0
   m_Name: localCanvas
   m_TagString: Untagged
@@ -2817,6 +2818,20 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1055909372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055909367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69c42639366bd6c48b520fe85b48355c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeliveryChuteUI
+  deliveryStatusText: {fileID: 1462072528}
+  deliveredBackground: {fileID: 761476919}
 --- !u!1 &1095080573
 GameObject:
   m_ObjectHideFlags: 0
@@ -3716,7 +3731,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Delivered
+  m_text: Waiting
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

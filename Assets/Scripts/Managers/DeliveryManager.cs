@@ -15,7 +15,7 @@ public class DeliveryManager : MonoBehaviour
         DeliveryChute.OnDeliverySuccess += DeliveryChute_OnDeliverySuccess;
     }
 
-    private void DeliveryChute_OnDeliverySuccess(object sender, DeliveryChute.OnDeliverySuccessEventArgs e)
+    private void DeliveryChute_OnDeliverySuccess(object sender, DeliveryChute.OnDeliveryEventArgs e)
     {
         int deliveredPlantCount = Player.Instance.inventory.GetPlantItemCount(e.plant);
 
@@ -33,6 +33,7 @@ public class DeliveryManager : MonoBehaviour
                 {
                     //new plant being added to the delivery list
                     deliveredPlantItemList.Add(new Inventory.plantItem(e.plant, deliveredPlantCount));
+                    break;
                 }
             }
         }

@@ -5,10 +5,12 @@ public class DeliveryChute : MonoBehaviour,ICanInteract
 {
     [SerializeField] PlantSO plantSO;
 
-    public static event EventHandler<OnDeliverySuccessEventArgs> OnDeliverySuccess;
-    public class OnDeliverySuccessEventArgs : EventArgs
+    public static event EventHandler<OnDeliveryEventArgs> OnDeliverySuccess;
+    public static event EventHandler<OnDeliveryEventArgs> OnDeliveryFailed;
+    public class OnDeliveryEventArgs : EventArgs
     {
         public Plant plant;
+        public DeliveryChute deliveryChute;
     }
 
     public void Interact(Player player)
@@ -19,14 +21,19 @@ public class DeliveryChute : MonoBehaviour,ICanInteract
             {
                 //player is carrying the correct fruit
                 Debug.Log("correct delivery");
-                OnDeliverySuccess?.Invoke(this, new OnDeliverySuccessEventArgs
+                OnDeliverySuccess?.Invoke(this, new OnDeliveryEventArgs
                 {
-                    plant = player.GetEquippedPlant()
+                    plant = player.GetEquippedPlant(),
+                    deliveryChute = this,
                 });
             }
             else
             {
-                Debug.Log("wrong delivery");
+                OnDeliveryFailed?.Invoke(this, new OnDeliveryEventArgs
+                {
+                    plant = player.GetEquippedPlant(),
+                    deliveryChute = this,
+                });
             }
             
         }
