@@ -151,6 +151,10 @@ public class Player : MonoBehaviour
             {
                 SetInteractable(seedStorage);
             }
+            if (interactHit.transform.TryGetComponent(out DeliveryChute deliveryChute))
+            {
+                SetInteractable(deliveryChute);
+            }
         }
         else
         {

@@ -202,6 +202,21 @@ public class Inventory : MonoBehaviour
             Debug.LogError("tool is not in list");
         }
     }
+
+    public void clearPlantInList(Plant plant)
+    {
+        if (CheckPlantInInventory(plant.GetPlantSO(), out int itemIndex,Plant.GrowthLevel.fruit))
+        {
+            plantItemlist.RemoveAt(itemIndex);
+            Player.Instance.SetEquippedPlant(null);
+            plant.DestroySelf();
+            onPlantItemListChanged?.Invoke(this, new onPlantItemAddedEventArgs
+            {
+                passedPlantItemList = plantItemlist
+            });
+        }
+    }
+
     public int GetPlantItemCount(Plant plant)
     {
         if (CheckPlantInInventory(plant.GetPlantSO(), out int itemIndex))
