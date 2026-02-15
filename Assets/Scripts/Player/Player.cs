@@ -29,8 +29,9 @@ public class Player : MonoBehaviour
     ICanInteract Interactable;
     [SerializeField]ICanInteract equippedInteractable;
 
-    [SerializeField] Plant equippedPlant;
-    [SerializeField] Tools equippedTool;
+    Plant equippedPlant;
+    
+    Tools equippedTool;
     [SerializeField] Transform interactSpawnTransform;
 
     public Inventory inventory;

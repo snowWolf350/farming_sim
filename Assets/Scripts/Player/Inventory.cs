@@ -217,9 +217,9 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public int GetPlantItemCount(Plant plant)
+    public int GetPlantItemCount(Plant plant,Plant.GrowthLevel growthLevel = Plant.GrowthLevel.seed)
     {
-        if (CheckPlantInInventory(plant.GetPlantSO(), out int itemIndex))
+        if (CheckPlantInInventory(plant.GetPlantSO(), out int itemIndex,growthLevel))
         {
             return plantItemlist[itemIndex].itemCount;
         }

@@ -1,13 +1,37 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static DeliveryManager;
 
 public class DeliveryManager : MonoBehaviour
 {
-    List<Inventory.plantItem> deliveredPlantItemList;
+    public static DeliveryManager Instance;
+
+    List<DeliverdItem> deliveredPlantItemList;
+
+    [Serializable]
+    public class DeliverdItem
+    {
+        public PlantSO plantSO;
+        public int itemCount;
+
+        public DeliverdItem( PlantSO plantSO, int itemCount)
+        {
+            this.plantSO = plantSO;
+            this.itemCount = itemCount;
+        }
+    }
+
+    [Header("Templaate UI")]
+    [SerializeField] Transform template;
+    [SerializeField] Transform container;
+    List<Transform> templateList;
 
     private void Awake()
     {
-        deliveredPlantItemList = new List<Inventory.plantItem>();
+        deliveredPlantItemList = new List<DeliverdItem>();
+        templateList = new List<Transform>();
+        Instance = this;
     }
 
     private void Start()
@@ -17,22 +41,24 @@ public class DeliveryManager : MonoBehaviour
 
     private void DeliveryChute_OnDeliverySuccess(object sender, DeliveryChute.OnDeliveryEventArgs e)
     {
-        int deliveredPlantCount = Player.Instance.inventory.GetPlantItemCount(e.plant);
+        int deliveredPlantCount = Inventory.Instance.GetPlantItemCount(e.plant,Plant.GrowthLevel.fruit);
 
         if (deliveredPlantItemList.Count >= 1)
         {
             //atleast one has been delivered
-            foreach (Inventory.plantItem plantItem in deliveredPlantItemList)
+            foreach (DeliverdItem deliverdItem in deliveredPlantItemList)
             {
-                if (plantItem.plant == e.plant)
+                if (deliverdItem.plantSO == e.plant.GetPlantSO())
                 {
                     //some plant of this type is aldready delivered
-                    plantItem.itemCount += deliveredPlantCount;
+                    deliverdItem.itemCount += deliveredPlantCount;
+                    UpdateTemplateCount(deliverdItem.itemCount, deliverdItem.plantSO);
                 }
                 else
                 {
                     //new plant being added to the delivery list
-                    deliveredPlantItemList.Add(new Inventory.plantItem(e.plant, deliveredPlantCount));
+                    deliveredPlantItemList.Add(new DeliverdItem(e.plant.GetPlantSO(), deliveredPlantCount));
+                    CreateNewTemplate(deliveredPlantCount, e.plant.GetPlantSO().plantIcon);
                     break;
                 }
             }
@@ -40,10 +66,51 @@ public class DeliveryManager : MonoBehaviour
         else
         {
             //delivered list is empty
-            deliveredPlantItemList.Add(new Inventory.plantItem(e.plant, deliveredPlantCount));
+            deliveredPlantItemList.Add(new DeliverdItem(e.plant.GetPlantSO(), deliveredPlantCount));
+            CreateNewTemplate(deliveredPlantCount, e.plant.GetPlantSO().plantIcon);
         }
 
             
         Player.Instance.inventory.clearPlantInList(e.plant);
     }
+
+    void CreateNewTemplate(int deliverCount,Sprite plantSprite)
+    {
+        Transform templateTransform = Instantiate(template, container);
+        templateTransform.gameObject.SetActive(true);
+        if (templateTransform.TryGetComponent(out MonitorSingleUI monitorSingleUI))
+        {
+            monitorSingleUI.SetDeliveredCount(deliverCount);
+            monitorSingleUI.SetPlantImage(plantSprite);
+        }
+        templateList.Add(templateTransform);
+    }
+    void UpdateTemplateCount(int deliverCount, PlantSO plantSO)
+    {
+        Transform templateTransform = templateList[GetDeliveredItemIndex(plantSO)];
+        if (templateTransform.TryGetComponent(out MonitorSingleUI monitorSingleUI))
+        {
+            monitorSingleUI.SetDeliveredCount(deliverCount);
+        }
+    }
+
+
+
+    int GetDeliveredItemIndex(PlantSO plantSO)
+    {
+        for (int i = 0; i < deliveredPlantItemList.Count; i++)
+        {
+            if (plantSO == deliveredPlantItemList[i].plantSO)
+            {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    public List<DeliverdItem> GetDeliveredList()
+    {
+        return deliveredPlantItemList;
+    }
+
 }
