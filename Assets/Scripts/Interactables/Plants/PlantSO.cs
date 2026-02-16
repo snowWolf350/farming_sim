@@ -16,7 +16,7 @@ public class PlantSO : ScriptableObject
     [Header("values")]
     public float halfDevelopedTimerMax;
     public float fullDevelopedTimerMax;
-    public float decaingTimerMax;
+    public float decayingTimerMax;
     public int halfYieldMax;
     public int halfYieldMin;
     public int fullYieldMax;

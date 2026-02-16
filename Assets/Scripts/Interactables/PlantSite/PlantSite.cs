@@ -93,11 +93,11 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
                     globalTimer += Time.deltaTime;
                     onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
                     {
-                        progressNormalized = globalTimer / activePlant.GetPlantSO().decaingTimerMax,
+                        progressNormalized = globalTimer / activePlant.GetPlantSO().decayingTimerMax,
                         growthLevel = activePlant.GetCurrentGrowthLevel()
                     });
 
-                    if (globalTimer > activePlant.GetPlantSO().decaingTimerMax)
+                    if (globalTimer > activePlant.GetPlantSO().decayingTimerMax)
                     {
                         globalTimer = 0;
                         activePlant.SetPlantGrowthLevel(Plant.GrowthLevel.destroyed);
@@ -111,6 +111,7 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
                     break;
                 case Plant.GrowthLevel.destroyed:
                     decayingParticleSystem.Stop();
+                    clearActivePlant();
                     onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
                     {
                         progressNormalized = 0
@@ -152,6 +153,13 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
         {
             //player is not carrying a plant
         }
+    }
+
+    void clearActivePlant()
+    {
+        activePlant.DestroySelf();
+        activePlant = null;
+        plantIsGrowing = false;
     }
 
     public void SetPlant(Plant plant)
