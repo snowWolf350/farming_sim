@@ -25,7 +25,9 @@ public class Plant : MonoBehaviour, ICanInteract
         seed,
         halfDeveloped,
         fullDeveloped,
-        fruit
+        decaying,
+        fruit,
+        destroyed
     }
 
     public GrowthLevel currentGrowthLevel;
@@ -100,6 +102,8 @@ public class Plant : MonoBehaviour, ICanInteract
                 activeVisual = Instantiate(plantSO.halfDevelopedVisual, gameObject.transform);
                 boxCollider.center = halfDevelopedColliderCenter;
                 boxCollider.size = halfDevelopedColliderSize;
+                break;
+            case GrowthLevel.decaying:
                 break;
             case GrowthLevel.fullDeveloped:
                 Destroy(transform.GetChild(0).gameObject);

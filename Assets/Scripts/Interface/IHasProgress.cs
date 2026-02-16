@@ -8,6 +8,7 @@ public interface IHasProgress
     public class onProgressChangedEventArgs : EventArgs
     {
         public float progressNormalized;
+        public Plant.GrowthLevel growthLevel;
     }
 
 }

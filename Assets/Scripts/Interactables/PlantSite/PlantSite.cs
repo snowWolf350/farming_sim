@@ -5,18 +5,19 @@ using UnityEngine;
 public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
 {
     [SerializeField] Transform spawnTransform;
+    [SerializeField] ParticleSystem decayingParticleSystem;
 
     Plant activePlant;
     bool plantIsGrowing;
 
-    float seed_halfDevelopedTimer;
-    float seed_fullDevelopedTimer;
+    float globalTimer;
 
     public event EventHandler<IHasProgress.onProgressChangedEventArgs> onProgressChanged;
 
     private void Start()
     {
         Plant.OnPlantHarvested += Plant_OnPlantHarvested;
+        decayingParticleSystem.Stop();
     }
 
     private void Plant_OnPlantHarvested(object sender, Plant.OnPlantHarvestedEventArgs e)
@@ -30,8 +31,7 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
             {
                 progressNormalized = 0
             });
-            seed_fullDevelopedTimer = 0;
-            seed_halfDevelopedTimer = 0;
+            globalTimer = 0;
         }
     }
 
@@ -44,40 +44,73 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
                 case Plant.GrowthLevel.seed:
                     {
                         //plant is a seed
-                        if (seed_halfDevelopedTimer == 0)
+                        if (globalTimer == 0)
                         {
                             activePlant.ClearVisual();
                         }
                          //plant is watered
-                        seed_halfDevelopedTimer += Time.deltaTime;
+                        globalTimer += Time.deltaTime;
 
                         onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
                         {
-                            progressNormalized = seed_halfDevelopedTimer / activePlant.GetPlantSO().halfDevelopedTimerMax
+                            progressNormalized = globalTimer / activePlant.GetPlantSO().halfDevelopedTimerMax
                         });
-                        if (seed_halfDevelopedTimer > activePlant.GetPlantSO().halfDevelopedTimerMax)
+                        if (globalTimer > activePlant.GetPlantSO().halfDevelopedTimerMax)
                         {
                            activePlant.SetPlantGrowthLevel(Plant.GrowthLevel.halfDeveloped);
-                           seed_halfDevelopedTimer = 0;
+                           globalTimer = 0;
                         }
                     }
                     break;
                 case Plant.GrowthLevel.halfDeveloped:
                     {
-                            seed_fullDevelopedTimer += Time.deltaTime;
+                            globalTimer += Time.deltaTime;
 
                             onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
                             {
-                            progressNormalized = seed_fullDevelopedTimer / activePlant.GetPlantSO().fullDevelopedTimerMax
+                                progressNormalized = globalTimer / activePlant.GetPlantSO().fullDevelopedTimerMax
                             });
-                            if (seed_fullDevelopedTimer > activePlant.GetPlantSO().fullDevelopedTimerMax)
+                            if (globalTimer > activePlant.GetPlantSO().fullDevelopedTimerMax)
                             {
-                              activePlant.SetPlantGrowthLevel(Plant.GrowthLevel.fullDeveloped);
-                              seed_fullDevelopedTimer = 0;
+                               if (UnityEngine.Random.Range(activePlant.GetPlantSO().DecayChanceMin, activePlant.GetPlantSO().DecayChanceMax) <= activePlant.GetPlantSO().DecayChance)
+                               {
+                                //plant is decayed
+                                  activePlant.SetPlantGrowthLevel(Plant.GrowthLevel.decaying);
+                                  globalTimer = 0;
+                               }
+                               else
+                               {
+                                //plant is healthy
+                                  activePlant.SetPlantGrowthLevel(Plant.GrowthLevel.fullDeveloped);
+                                  globalTimer = 0;
+                               }
+                               
                             }
                     }
                     break;
+                case Plant.GrowthLevel.decaying:
+                    decayingParticleSystem.Play();
+                    globalTimer += Time.deltaTime;
+                    onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
+                    {
+                        progressNormalized = globalTimer / activePlant.GetPlantSO().decaingTimerMax,
+                        growthLevel = activePlant.GetCurrentGrowthLevel()
+                    });
+
+                    if (globalTimer > activePlant.GetPlantSO().decaingTimerMax)
+                    {
+                        globalTimer = 0;
+                        activePlant.SetPlantGrowthLevel(Plant.GrowthLevel.destroyed);
+                    }
+                    break;
                 case Plant.GrowthLevel.fullDeveloped:
+                    onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
+                    {
+                        progressNormalized = 0
+                    });
+                    break;
+                case Plant.GrowthLevel.destroyed:
+                    decayingParticleSystem.Stop();
                     onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
                     {
                         progressNormalized = 0
