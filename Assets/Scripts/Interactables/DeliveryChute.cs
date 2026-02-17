@@ -38,4 +38,14 @@ public class DeliveryChute : MonoBehaviour,ICanInteract
             
         }
     }
+
+    public float GetHoldDuration()
+    {
+        return 0;
+    }
+
+    public bool RequiresHold()
+    {
+        return false;
+    }
 }

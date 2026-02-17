@@ -40,6 +40,7 @@ public class Plant : MonoBehaviour, ICanInteract
         activeVisual = transform.GetChild(0).gameObject;
         boxCollider.size = seedColliderSize;
         boxCollider.center = seedColliderCenter;
+        boxCollider.enabled = false;
     }
 
     public void Interact(Player player)
@@ -64,6 +65,9 @@ public class Plant : MonoBehaviour, ICanInteract
                 SetPlantGrowthLevel(GrowthLevel.fruit);
                 setParent(player.GetInteractSpawn());
                 player.inventory.AddPlantInList(this, UnityEngine.Random.Range(plantSO.halfYieldMin, plantSO.halfYieldMax));
+                break;
+            case GrowthLevel.decaying:
+                DestroySelf();
                 break;
             case GrowthLevel.fullDeveloped:
                 SetPlantGrowthLevel(GrowthLevel.fruit);
@@ -99,19 +103,23 @@ public class Plant : MonoBehaviour, ICanInteract
         switch (growthlevel)
         {
             case GrowthLevel.halfDeveloped:
+                boxCollider.enabled = true;
                 activeVisual = Instantiate(plantSO.halfDevelopedVisual, gameObject.transform);
                 boxCollider.center = halfDevelopedColliderCenter;
                 boxCollider.size = halfDevelopedColliderSize;
                 break;
             case GrowthLevel.decaying:
+                boxCollider.enabled = false;
                 break;
             case GrowthLevel.fullDeveloped:
+                boxCollider.enabled = true;
                 Destroy(transform.GetChild(0).gameObject);
                 activeVisual = Instantiate(plantSO.fullyDevelopedVisual, gameObject.transform);
                 boxCollider.center = fullyDevelopedColliderCenter;
                 boxCollider.size = fullyDevelopedColliderSize;
                 break;
             case GrowthLevel.fruit:
+                boxCollider.enabled = false;
                 Destroy(transform.GetChild(0).gameObject);
                 activeVisual = Instantiate(plantSO.fruitVisual, gameObject.transform);
                 boxCollider.enabled = false;

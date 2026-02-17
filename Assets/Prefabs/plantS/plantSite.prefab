@@ -451,6 +451,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlantSite
   spawnTransform: {fileID: 5351108113440642475}
   decayingParticleSystem: {fileID: 3621790303950492654}
+  wateringCan: {fileID: 11400000, guid: cef47e63442a52e469ed412322e44e69, type: 2}
+  sprinkler: {fileID: 11400000, guid: 1530ae560fcb281439b689e1fbe512e1, type: 2}
 --- !u!65 &8058679827389649369
 BoxCollider:
   m_ObjectHideFlags: 0

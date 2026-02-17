@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using static Inventory;
+using static UnityEngine.GridBrushBase;
 
 public class Inventory : MonoBehaviour
 {
@@ -76,10 +77,13 @@ public class Inventory : MonoBehaviour
         GameInput.Instance.OnPlant4Equipped += GameInput_OnPlant4Equipped;
         GameInput.Instance.OnPlant5Equipped += GameInput_OnPlant5Equipped;
         GameInput.Instance.OnTool1Equipped += GameInput_OnTool1Equipped;
+        GameInput.Instance.OnTool2Equipped += GameInput_OnTool2Equipped;
     }
 
+
+
     #region |---Plants---|
-   
+
     private void GameInput_OnPlant1Equipped(object sender, EventArgs e)
     {
         if (plantItemlist.Count >= 1)
@@ -148,12 +152,12 @@ public class Inventory : MonoBehaviour
         {
             if (CheckPlantInInventory(plant.GetPlantSO(), out int itemIndex))
             {
-                //player has this plant item in inventory
+                //player has this seed item in inventory
                 plantItemlist[itemIndex].IncreaseCount();
             }
             else
             {
-                //player does not have this in his inventory adding a new one
+                //player does not have this in his inventory adding a new one, seed
                 plantItem plantitem = new(plant, 1);
                 plantItemlist.Add(plantitem);
             }
@@ -199,7 +203,7 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            Debug.LogError("tool is not in list");
+            Debug.LogError("plant is not in list");
         }
     }
 
@@ -274,7 +278,18 @@ public class Inventory : MonoBehaviour
             });
         }
     }
-
+    private void GameInput_OnTool2Equipped(object sender, EventArgs e)
+    {
+        if (toolItemList.Count >= 2)
+        {
+            Player.Instance.SetEquippedTool(toolItemList[1].tool);
+            toggleEqupipedItem(toolItemList[1].tool);
+            onToolItemListChanged?.Invoke(this, new onToolItemAddedEventArgs
+            {
+                passedToolItemList = toolItemList
+            });
+        }
+    }
     public void AddToolInList(Tools tool)
     {
         if (CheckToolInInventory(tool.GetToolSO(), out int itemIndex))
@@ -284,6 +299,8 @@ public class Inventory : MonoBehaviour
         }
         else
         {
+            BoxCollider collider = tool.gameObject.GetComponent<BoxCollider>();
+            collider.enabled = false;
             toolItem toolitem = new(tool, 1);
             toolItemList.Add(toolitem);
         }
@@ -296,6 +313,8 @@ public class Inventory : MonoBehaviour
     {
         if (CheckToolInInventory(tool.GetToolSO(), out int itemIndex))
         {
+            BoxCollider collider = tool.gameObject.GetComponent<BoxCollider>();
+            collider.enabled = true;
             //player has this tool item in inventory
             toolItemList.RemoveAt(itemIndex);
 

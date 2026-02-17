@@ -6,6 +6,8 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
 {
     [SerializeField] Transform spawnTransform;
     [SerializeField] ParticleSystem decayingParticleSystem;
+    [SerializeField] ToolsSO wateringCan;
+    [SerializeField] ToolsSO sprinkler;
 
     Plant activePlant;
     bool plantIsGrowing;
@@ -104,6 +106,7 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
                     }
                     break;
                 case Plant.GrowthLevel.fullDeveloped:
+                    decayingParticleSystem.Stop();
                     onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
                     {
                         progressNormalized = 0
@@ -144,11 +147,24 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
             }
 
         }
-        if (Player.Instance.GetEquippedInteractable() is Tools && activePlant != null && !plantIsGrowing)
+        if (Player.Instance.GetEquippedInteractable() is Tools && activePlant != null )
         {
             //water plant and make it start growing
-            player.GetEquippedTool().DecreaseDurability();
-            plantIsGrowing = true;
+            if (player.GetEquippedTool().GetToolSO() == wateringCan && !plantIsGrowing)
+            {
+                //player has a watering can 
+                player.GetEquippedTool().DecreaseDurability();
+                plantIsGrowing = true;
+            }
+            else
+            {
+                //player has sprinkler
+                if (activePlant.GetCurrentGrowthLevel() == Plant.GrowthLevel.decaying && player.GetEquippedTool().GetToolSO() == sprinkler)
+                {
+                    //plant is decaying and player has sprinkler
+                    activePlant.SetPlantGrowthLevel(Plant.GrowthLevel.fullDeveloped);
+                }
+            }
         }
         else
         {
