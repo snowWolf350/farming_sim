@@ -22,10 +22,14 @@ public class Tools : MonoBehaviour, ICanInteract, IHasProgress
         if (player.inventory.CheckToolInInventory(toolsSO, out int itemIndex))
         {
             //player has this tool in his inventory
-                //swap 
+                //swap position
                 player.GetEquippedTool().setParent(null);
                 player.GetEquippedTool().transform.position = this.transform.position;
+                player.GetEquippedTool().gameObject.SetActive(true);
+                //remove from inventory and player
+                player.inventory.RemoveToolInList(this);
                 player.SetEquippedTool(null);
+                //equip new tool
                 setParent(player.GetInteractSpawn());
                 player.inventory.EquipNewTool(this);
         }

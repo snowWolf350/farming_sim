@@ -296,23 +296,13 @@ public class Inventory : MonoBehaviour
     {
         if (CheckToolInInventory(tool.GetToolSO(), out int itemIndex))
         {
-            //player has this plant item in inventory
-            if (plantItemlist[itemIndex].itemCount > 1)
+            //player has this tool item in inventory
+            toolItemList.RemoveAt(itemIndex);
+
+            onToolItemListChanged?.Invoke(this, new onToolItemAddedEventArgs
             {
-                plantItemlist[itemIndex].DecreaseCount();
-            }
-            else
-            {
-                plantItemlist.RemoveAt(itemIndex);
-            }
-            onPlantItemListChanged?.Invoke(this, new onPlantItemAddedEventArgs
-            {
-                passedPlantItemList = plantItemlist
+                passedToolItemList = toolItemList
             });
-        }
-        else
-        {
-            Debug.LogError("tool is not in list");
         }
     }
 
