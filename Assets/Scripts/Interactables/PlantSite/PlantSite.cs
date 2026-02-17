@@ -144,9 +144,10 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
             }
 
         }
-        if (Player.Instance.GetEquippedInteractable() is Tools && activePlant != null)
+        if (Player.Instance.GetEquippedInteractable() is Tools && activePlant != null && !plantIsGrowing)
         {
             //water plant and make it start growing
+            player.GetEquippedTool().DecreaseDurability();
             plantIsGrowing = true;
         }
         else

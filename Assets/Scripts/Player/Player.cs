@@ -187,6 +187,8 @@ public class Player : MonoBehaviour
     {
         return interactSpawnTransform;
     }
+
+
     #endregion
     
     
@@ -204,7 +206,10 @@ public class Player : MonoBehaviour
     {
         return equippedPlant;
     }
-
+    public Tools GetEquippedTool()
+    {
+        return equippedTool;
+    }
     public void SetEquippedPlant(Plant plant)
     {
         equippedPlant = plant;

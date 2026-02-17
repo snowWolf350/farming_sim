@@ -1,16 +1,33 @@
 using System;
 using UnityEngine;
 
-public class Tools : MonoBehaviour, ICanInteract
+public class Tools : MonoBehaviour, ICanInteract, IHasProgress 
 {
     [SerializeField] ToolsSO toolsSO;
+
+    int toolDurability;
+
+    public event EventHandler<IHasProgress.onProgressChangedEventArgs> onProgressChanged;
+
+    private void Start()
+    {
+        toolDurability = toolsSO.DurabilityMax;
+        onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
+        {
+            progressNormalized = toolDurability / toolsSO.DurabilityMax,
+        });
+    }
     public void Interact(Player player)
     {
         if (player.inventory.CheckToolInInventory(toolsSO, out int itemIndex))
         {
             //player has this tool in his inventory
-            Debug.Log("player aldready has tool");
-            
+                //swap 
+                player.GetEquippedTool().setParent(null);
+                player.GetEquippedTool().transform.position = this.transform.position;
+                player.SetEquippedTool(null);
+                setParent(player.GetInteractSpawn());
+                player.inventory.EquipNewTool(this);
         }
         else
         {
@@ -29,6 +46,28 @@ public class Tools : MonoBehaviour, ICanInteract
     public ToolsSO GetToolSO()
     {
         return toolsSO;
+    }
+
+    public int GetToolDurability()
+    {
+        return toolDurability;
+    }
+
+    public void DecreaseDurability()
+    {
+        if (toolDurability - toolsSO.DurabilityDecayMax < 0)
+        {
+            //tool broken
+        }
+        else
+        {
+            //decrease durability
+            toolDurability -= (int)UnityEngine.Random.Range(toolsSO.DurabilityDecayMin, toolsSO.DurabilityDecayMax);
+            onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
+            {
+                progressNormalized = (float)toolDurability / toolsSO.DurabilityMax,
+            });
+        }
     }
 
     private void DestroySelf()

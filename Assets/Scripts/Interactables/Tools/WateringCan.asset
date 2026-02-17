@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ToolsSO
   toolName: Watering Can
   toolSprite: {fileID: 21300000, guid: 61de1341571ad58409062d55e902e20c, type: 3}
+  DurabilityMax: 10
