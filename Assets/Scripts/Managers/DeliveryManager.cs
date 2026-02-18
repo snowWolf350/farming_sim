@@ -90,6 +90,7 @@ public class DeliveryManager : MonoBehaviour
             lifeAmount += deliverdItem.plantSO.lifeAmount * deliverdItem.itemCount;
         }
         shopUI.updateLifeAmountUI(lifeAmount);
+        Debug.Log("testing");
     }
 
     void CreateNewTemplate(int deliverCount,Sprite plantSprite)
