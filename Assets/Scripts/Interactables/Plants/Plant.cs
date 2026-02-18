@@ -49,22 +49,16 @@ public class Plant : MonoBehaviour, ICanInteract
         switch (currentGrowthLevel)
         {
             case GrowthLevel.seed:
-                if (player.inventory.CheckPlantInInventory(plantSO, out int itemIndex))
-                {
-                    //player has this plant in his inventory
-                    player.inventory.IncreaseItemCountAt(itemIndex);
-                    DestroySelf();
-                }
-                else
-                {
-                    setParent(player.GetInteractSpawn());
-                    player.inventory.EquipNewPlant(this);
-                }
+                player.inventory.AddPlantInList(this, UnityEngine.Random.Range(plantSO.halfYieldMin, plantSO.halfYieldMax));
                 break;
             case GrowthLevel.halfDeveloped:
                 SetPlantGrowthLevel(GrowthLevel.fruit);
                 setParent(player.GetInteractSpawn());
                 player.inventory.AddPlantInList(this, UnityEngine.Random.Range(plantSO.halfYieldMin, plantSO.halfYieldMax));
+                OnPlantHarvested?.Invoke(this, new OnPlantHarvestedEventArgs
+                {
+                    plant = this,
+                });
                 break;
             case GrowthLevel.decaying:
                 DestroySelf();
@@ -73,12 +67,13 @@ public class Plant : MonoBehaviour, ICanInteract
                 SetPlantGrowthLevel(GrowthLevel.fruit);
                 setParent(player.GetInteractSpawn());
                 player.inventory.AddPlantInList(this, UnityEngine.Random.Range(plantSO.fullYieldMin, plantSO.fullYieldMax));
+                OnPlantHarvested?.Invoke(this, new OnPlantHarvestedEventArgs
+                {
+                    plant = this,
+                });
                 break;
         }
-        OnPlantHarvested?.Invoke(this, new OnPlantHarvestedEventArgs
-        {
-            plant = this,
-        });
+
     }
 
     public void setParent(Transform transform)

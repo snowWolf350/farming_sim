@@ -176,6 +176,7 @@ public class Inventory : MonoBehaviour
                 plantItemlist.Add(plantitem);
             }
         }
+        toggleEqupipedItem(plant);
         onPlantItemListChanged?.Invoke(this, new onPlantItemAddedEventArgs
         {
             passedPlantItemList = plantItemlist

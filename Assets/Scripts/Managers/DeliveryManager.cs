@@ -27,6 +27,11 @@ public class DeliveryManager : MonoBehaviour
     [SerializeField] Transform container;
     List<Transform> templateList;
 
+    //shop
+    [Header("Shop UI")]
+    [SerializeField] ShopUI shopUI;
+    int lifeAmount = 0;
+
     private void Awake()
     {
         deliveredPlantItemList = new List<DeliverdItem>();
@@ -53,12 +58,14 @@ public class DeliveryManager : MonoBehaviour
                     //some plant of this type is aldready delivered
                     deliverdItem.itemCount += deliveredPlantCount;
                     UpdateTemplateCount(deliverdItem.itemCount, deliverdItem.plantSO);
+                    UpdateLifeAmount();
                 }
                 else
                 {
                     //new plant being added to the delivery list
                     deliveredPlantItemList.Add(new DeliverdItem(e.plant.GetPlantSO(), deliveredPlantCount));
                     CreateNewTemplate(deliveredPlantCount, e.plant.GetPlantSO().plantIcon);
+                    UpdateLifeAmount();
                     break;
                 }
             }
@@ -68,10 +75,21 @@ public class DeliveryManager : MonoBehaviour
             //delivered list is empty
             deliveredPlantItemList.Add(new DeliverdItem(e.plant.GetPlantSO(), deliveredPlantCount));
             CreateNewTemplate(deliveredPlantCount, e.plant.GetPlantSO().plantIcon);
+            UpdateLifeAmount();
         }
 
             
         Player.Instance.inventory.clearPlantInList(e.plant);
+    }
+
+    void UpdateLifeAmount()
+    {
+        lifeAmount = 0;
+        foreach (DeliverdItem deliverdItem in deliveredPlantItemList)
+        {
+            lifeAmount += deliverdItem.plantSO.lifeAmount * deliverdItem.itemCount;
+        }
+        shopUI.updateLifeAmountUI(lifeAmount);
     }
 
     void CreateNewTemplate(int deliverCount,Sprite plantSprite)

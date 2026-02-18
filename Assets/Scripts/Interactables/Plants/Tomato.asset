@@ -29,4 +29,5 @@ MonoBehaviour:
   fullYieldMin: 5
   DecayChanceMax: 10
   DecayChanceMin: 1
-  DecayChance: 4
+  DecayChance: 8
+  lifeAmount: 5
