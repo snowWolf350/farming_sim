@@ -326,6 +326,22 @@ public class Inventory : MonoBehaviour
         }
     }
 
+
+    public void clearToolInList(Tools tool)
+    {
+        if (CheckToolInInventory(tool.GetToolSO(), out int itemIndex))
+        {
+            toolItemList.RemoveAt(itemIndex);
+            Player.Instance.SetEquippedTool(null);
+            tool.DestroySelf();
+            onToolItemListChanged?.Invoke(this, new onToolItemAddedEventArgs
+            {
+                passedToolItemList = toolItemList
+            });
+        }
+    }
+
+
     public bool CheckToolInInventory(ToolsSO toolSO, out int itemIndex)
     {
         for (int i = 0; i < toolItemList.Count; i++)

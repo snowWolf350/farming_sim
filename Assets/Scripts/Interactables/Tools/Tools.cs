@@ -57,11 +57,13 @@ public class Tools : MonoBehaviour, ICanInteract, IHasProgress
         return toolDurability;
     }
 
+    [ContextMenu("decrease durability")]
     public void DecreaseDurability()
     {
         if (toolDurability - toolsSO.DurabilityDecayMax < 0)
         {
             //tool broken
+            Player.Instance.inventory.clearToolInList(this);
         }
         else
         {
@@ -74,7 +76,7 @@ public class Tools : MonoBehaviour, ICanInteract, IHasProgress
         }
     }
 
-    private void DestroySelf()
+    public void DestroySelf()
     {
         Destroy(gameObject);
     }
