@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e94370ae5972914f9abe51e38684fff, type: 3}
+  m_Name: Mushroom
+  m_EditorClassIdentifier: Assembly-CSharp::PlantSO
+  plantName: Mushroom
+  plantPrefab: {fileID: 3769895432225219517, guid: b27706c036e539543905dc58a07c2d84, type: 3}
+  seedVisual: {fileID: 6285415377274720070, guid: 8fbba295fed02c14c880a8e0be6c08ce, type: 3}
+  fullyDevelopedVisual: {fileID: 7577455097884724306, guid: ff8ed82c36f7b66499b19b44ae4b2e17, type: 3}
+  halfDevelopedVisual: {fileID: 1719760613758097442, guid: 9ecec123b383b3d40b26d42e5677723c, type: 3}
+  fruitVisual: {fileID: 709938255933652303, guid: 3a7c291638dc39545a410043cc08cc66, type: 3}
+  plantIcon: {fileID: 0}
+  SeedIcon: {fileID: 0}
+  halfDevelopedTimerMax: 0
+  fullDevelopedTimerMax: 0
+  decayingTimerMax: 0
+  halfYieldMax: 0
+  halfYieldMin: 0
+  fullYieldMax: 0
+  fullYieldMin: 0
+  DecayChanceMax: 0
+  DecayChanceMin: 0
+  DecayChance: 0
+  lifeAmount: 0

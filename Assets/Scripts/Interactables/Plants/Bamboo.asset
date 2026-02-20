@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e94370ae5972914f9abe51e38684fff, type: 3}
+  m_Name: Bamboo
+  m_EditorClassIdentifier: Assembly-CSharp::PlantSO
+  plantName: Bamboo
+  plantPrefab: {fileID: 3769895432225219517, guid: 111b23d58732f084faa2683c48be5201, type: 3}
+  seedVisual: {fileID: 7861006210082705271, guid: 89267ff0f988a2f4bb22afa943944a29, type: 3}
+  fullyDevelopedVisual: {fileID: 9006493877296914877, guid: c469c3ebef8f28f42b492d61f5e031ec, type: 3}
+  halfDevelopedVisual: {fileID: 7803078515925319509, guid: 1731e13c621da6248864956f9add23ef, type: 3}
+  fruitVisual: {fileID: 2143961572015854211, guid: f653dd4f7ec33a34095855e007913ad1, type: 3}
+  plantIcon: {fileID: 21300000, guid: 12021f3f14478c643a1fc14e9dfecff0, type: 3}
+  SeedIcon: {fileID: 0}
+  halfDevelopedTimerMax: 0
+  fullDevelopedTimerMax: 0
+  decayingTimerMax: 0
+  halfYieldMax: 0
+  halfYieldMin: 0
+  fullYieldMax: 0
+  fullYieldMin: 0
+  DecayChanceMax: 0
+  DecayChanceMin: 0
+  DecayChance: 0
+  lifeAmount: 0

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e94370ae5972914f9abe51e38684fff, type: 3}
+  m_Name: Eggplant
+  m_EditorClassIdentifier: Assembly-CSharp::PlantSO
+  plantName: Eggplant
+  plantPrefab: {fileID: 3769895432225219517, guid: 7b336c0d4008cd94f82db4b0353bf26e, type: 3}
+  seedVisual: {fileID: 1990182303437586661, guid: daf22df837b0f8a4984417d99f07315d, type: 3}
+  fullyDevelopedVisual: {fileID: 8274533778526745552, guid: a7cdee2f55e0a404091f611c738e08e7, type: 3}
+  halfDevelopedVisual: {fileID: 4908282280121552341, guid: a5fe4b8e7daf6f643bf02bdeb7a087c1, type: 3}
+  fruitVisual: {fileID: 3556520044116283014, guid: f9dba558afb134546b2c61a96574cbea, type: 3}
+  plantIcon: {fileID: 21300000, guid: 50beec186b458794a9f1806ddf76b49a, type: 3}
+  SeedIcon: {fileID: 0}
+  halfDevelopedTimerMax: 0
+  fullDevelopedTimerMax: 0
+  decayingTimerMax: 0
+  halfYieldMax: 0
+  halfYieldMin: 0
+  fullYieldMax: 0
+  fullYieldMin: 0
+  DecayChanceMax: 0
+  DecayChanceMin: 0
+  DecayChance: 0
+  lifeAmount: 0
