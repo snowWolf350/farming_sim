@@ -18,16 +18,16 @@ MonoBehaviour:
   fullyDevelopedVisual: {fileID: 7577455097884724306, guid: ff8ed82c36f7b66499b19b44ae4b2e17, type: 3}
   halfDevelopedVisual: {fileID: 1719760613758097442, guid: 9ecec123b383b3d40b26d42e5677723c, type: 3}
   fruitVisual: {fileID: 709938255933652303, guid: 3a7c291638dc39545a410043cc08cc66, type: 3}
-  plantIcon: {fileID: 0}
-  SeedIcon: {fileID: 0}
-  halfDevelopedTimerMax: 0
-  fullDevelopedTimerMax: 0
-  decayingTimerMax: 0
-  halfYieldMax: 0
-  halfYieldMin: 0
-  fullYieldMax: 0
-  fullYieldMin: 0
-  DecayChanceMax: 0
-  DecayChanceMin: 0
-  DecayChance: 0
-  lifeAmount: 0
+  plantIcon: {fileID: 21300000, guid: 7fc91360bb243614aa73ba03132ab79e, type: 3}
+  SeedIcon: {fileID: 21300000, guid: f32ae01c1c5c4ec41b7e57ce2f11cbe5, type: 3}
+  halfDevelopedTimerMax: 6
+  fullDevelopedTimerMax: 12
+  decayingTimerMax: 3
+  halfYieldMax: 3
+  halfYieldMin: 1
+  fullYieldMax: 5
+  fullYieldMin: 3
+  DecayChanceMax: 10
+  DecayChanceMin: 1
+  DecayChance: 7
+  lifeAmount: 50

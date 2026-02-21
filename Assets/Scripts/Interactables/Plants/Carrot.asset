@@ -22,12 +22,12 @@ MonoBehaviour:
   SeedIcon: {fileID: 21300000, guid: 921a2ca74d49a4e41812b1bd9c6e6f64, type: 3}
   halfDevelopedTimerMax: 3
   fullDevelopedTimerMax: 7
-  decayingTimerMax: 10
+  decayingTimerMax: 7
   halfYieldMax: 3
   halfYieldMin: 1
   fullYieldMax: 4
-  fullYieldMin: 7
+  fullYieldMin: 9
   DecayChanceMax: 10
   DecayChanceMin: 1
-  DecayChance: 8
+  DecayChance: 4
   lifeAmount: 10

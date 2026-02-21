@@ -169,6 +169,7 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
         else
         {
             //player is not carrying a plant
+            return;
         }
     }
 

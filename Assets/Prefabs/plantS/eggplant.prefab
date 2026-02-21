@@ -47,10 +47,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Plant
   plantSO: {fileID: 11400000, guid: e0c0b84e8a5a60f409391b879cd116c4, type: 2}
-  halfDevelopedColliderSize: {x: 0.5, y: 1, z: 0.45}
-  halfDevelopedColliderCenter: {x: 0.05, y: 0.6, z: -0.2}
-  fullyDevelopedColliderSize: {x: 1, y: 1, z: 1}
-  fullyDevelopedColliderCenter: {x: 0, y: 0.9, z: -0.2}
+  halfDevelopedColliderSize: {x: 0.7, y: 0.55, z: 0.8}
+  halfDevelopedColliderCenter: {x: 0, y: 0.45, z: 0}
+  fullyDevelopedColliderSize: {x: 0.9, y: 0.9, z: 0.8}
+  fullyDevelopedColliderCenter: {x: 0, y: 0.65, z: 0}
   currentGrowthLevel: 0
 --- !u!65 &6376666780720536788
 BoxCollider:
@@ -124,6 +124,10 @@ PrefabInstance:
     - target: {fileID: 1990182303437586661, guid: daf22df837b0f8a4984417d99f07315d, type: 3}
       propertyPath: m_Name
       value: eggplantSeed
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990182303437586661, guid: daf22df837b0f8a4984417d99f07315d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
