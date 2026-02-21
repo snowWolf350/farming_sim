@@ -8,5 +8,6 @@ public class ShopSO : ScriptableObject
     public GameObject itemGameobject;
     public PlantSO plantSO;
     public Vector3 spawnPos;
-    public float itemPrice;
+    public int itemPrice;
+    public ShopSingleItem.itemType itemType;
 }

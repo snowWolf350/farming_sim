@@ -214,12 +214,13 @@ public class Player : MonoBehaviour
     {
         equippedPlant = plant;
         equippedInteractable = equippedPlant;
+        
     }
 
     public void SetEquippedTool(Tools tool)
     {
-        equippedTool = tool;
-        equippedInteractable = equippedTool;
+            equippedTool = tool;
+            equippedInteractable = equippedTool;
     }
 
     public ICanInteract GetEquippedInteractable()

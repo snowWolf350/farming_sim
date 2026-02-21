@@ -11,7 +11,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] List<Image> plantImageBackgroundList;
     public Color equippedBackgroundColor;
     [SerializeField] List<TextMeshProUGUI> plantCountTextList;
-    [Header("Tools")]
+    [Header("ToolsContainer")]
     [SerializeField] List<Image> toolImageList;
     [SerializeField] List<Image> ToolImageBackgroundList;
 

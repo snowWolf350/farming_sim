@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,12 @@ public class ShopSingleItem : MonoBehaviour
 
     [SerializeField] Button buyButton;
 
+    [SerializeField] Image plantIcon;
+
+    [SerializeField] TextMeshProUGUI lifeAmountText;
+
+    int lifeAmount;
+
     private void Awake()
     {
         buyButton.onClick.AddListener(()=>{
@@ -31,5 +38,11 @@ public class ShopSingleItem : MonoBehaviour
                     break;
             }
         });
+    }
+
+    public void SetTemplate(int lifeAmount, Sprite itemIcom)
+    {
+        plantIcon.sprite = itemIcom;
+        lifeAmountText.text = lifeAmount.ToString();
     }
 }

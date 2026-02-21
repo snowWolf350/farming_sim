@@ -72,10 +72,12 @@ public class GameInput : MonoBehaviour
         if (mouseIsLocked)
         {
             Cursor.lockState = CursorLockMode.Locked;
+            ShopManager.Instance.Hide();
         }
         else
         {
             Cursor.lockState = CursorLockMode.None;
+            ShopManager.Instance.Show();
         }
     }
     private void Tool2_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
