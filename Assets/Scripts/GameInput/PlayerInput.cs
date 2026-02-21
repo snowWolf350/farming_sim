@@ -190,6 +190,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""shop"",
+                    ""type"": ""Button"",
+                    ""id"": ""cc48a808-cf0f-4027-bca4-ce5a99bd6dde"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -412,6 +421,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""tool2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""89431273-72a0-4ce7-90e2-9337ce113a2d"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""shop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -431,6 +451,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_player_plant5 = m_player.FindAction("plant5", throwIfNotFound: true);
         m_player_tool1 = m_player.FindAction("tool1", throwIfNotFound: true);
         m_player_tool2 = m_player.FindAction("tool2", throwIfNotFound: true);
+        m_player_shop = m_player.FindAction("shop", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -522,6 +543,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_player_plant5;
     private readonly InputAction m_player_tool1;
     private readonly InputAction m_player_tool2;
+    private readonly InputAction m_player_shop;
     /// <summary>
     /// Provides access to input actions defined in input action map "player".
     /// </summary>
@@ -577,6 +599,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "player/tool2".
         /// </summary>
         public InputAction @tool2 => m_Wrapper.m_player_tool2;
+        /// <summary>
+        /// Provides access to the underlying input action "player/shop".
+        /// </summary>
+        public InputAction @shop => m_Wrapper.m_player_shop;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -636,6 +662,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @tool2.started += instance.OnTool2;
             @tool2.performed += instance.OnTool2;
             @tool2.canceled += instance.OnTool2;
+            @shop.started += instance.OnShop;
+            @shop.performed += instance.OnShop;
+            @shop.canceled += instance.OnShop;
         }
 
         /// <summary>
@@ -680,6 +709,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @tool2.started -= instance.OnTool2;
             @tool2.performed -= instance.OnTool2;
             @tool2.canceled -= instance.OnTool2;
+            @shop.started -= instance.OnShop;
+            @shop.performed -= instance.OnShop;
+            @shop.canceled -= instance.OnShop;
         }
 
         /// <summary>
@@ -797,5 +829,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnTool2(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "shop" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnShop(InputAction.CallbackContext context);
     }
 }

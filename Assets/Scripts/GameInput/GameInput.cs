@@ -23,6 +23,8 @@ public class GameInput : MonoBehaviour
     Vector2 mouseInputVector;
     float mouseSensitivity = 25;
 
+    bool mouseIsLocked;
+
 
     private void Awake()
     {
@@ -41,8 +43,11 @@ public class GameInput : MonoBehaviour
         playerInput.player.plant5.performed += Plant5_performed;
         playerInput.player.tool1.performed += Tool1_performed;
         playerInput.player.tool2.performed += Tool2_performed;
+        playerInput.player.shop.performed += Shop_performed;
         Cursor.lockState = CursorLockMode.Locked;
+        mouseIsLocked = true;
     }
+
 
     private void OnEnable()
     {
@@ -57,6 +62,21 @@ public class GameInput : MonoBehaviour
         playerInput.player.plant5.Enable();
         playerInput.player.tool1.Enable();
         playerInput.player.tool2.Enable();
+        playerInput.player.shop.Enable();
+    }
+
+
+    private void Shop_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        mouseIsLocked = !mouseIsLocked;
+        if (mouseIsLocked)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
     private void Tool2_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
@@ -111,7 +131,11 @@ public class GameInput : MonoBehaviour
 
     public Vector2 GetMouseDelta()
     {
-        mouseInputVector = playerInput.player.mouse.ReadValue<Vector2>();
-        return new Vector2(mouseInputVector.x * mouseSensitivity * Time.deltaTime,mouseInputVector.y * mouseSensitivity * Time.deltaTime);
+        if (mouseIsLocked)
+        {
+            mouseInputVector = playerInput.player.mouse.ReadValue<Vector2>();
+            return new Vector2(mouseInputVector.x * mouseSensitivity * Time.deltaTime, mouseInputVector.y * mouseSensitivity * Time.deltaTime);
+        }
+        return Vector2.zero;
     }
 }

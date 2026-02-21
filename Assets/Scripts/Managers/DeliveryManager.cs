@@ -29,7 +29,6 @@ public class DeliveryManager : MonoBehaviour
 
     //shop
     [Header("Shop UI")]
-    [SerializeField] ShopUI shopUI;
     int lifeAmount = 0;
 
     private void Awake()
@@ -89,7 +88,7 @@ public class DeliveryManager : MonoBehaviour
         {
             lifeAmount += deliverdItem.plantSO.lifeAmount * deliverdItem.itemCount;
         }
-        shopUI.updateLifeAmountUI(lifeAmount);
+        ShopManager.Instance.updateLifeAmountUI(lifeAmount);
     }
 
     void CreateNewTemplate(int deliverCount,Sprite plantSprite)

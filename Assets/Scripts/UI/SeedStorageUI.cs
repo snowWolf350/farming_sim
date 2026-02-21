@@ -9,6 +9,7 @@ public class SeedStorageUI : MonoBehaviour
     private void Start()
     {
         seedStorage = transform.parent.GetComponent<SeedStorage>();
+        seedCountText.text = seedStorage.GetSeedCountString();
         seedStorage.OnSeedCountUpdated += SeedStorage_OnSeedCountUpdated;
     }
 

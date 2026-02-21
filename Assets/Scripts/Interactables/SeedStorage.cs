@@ -66,13 +66,9 @@ public class SeedStorage : MonoBehaviour,ICanInteract
         return new string(currentSeedsCount.ToString() + "\\" + maxSeedCapacity.ToString());
     }
 
-    public float GetHoldDuration()
+    public PlantSO GetPlantSO()
     {
-        return 0;
+        return plantSO;
     }
-
-    public bool RequiresHold()
-    {
-        return false;
-    }
+   
 }
