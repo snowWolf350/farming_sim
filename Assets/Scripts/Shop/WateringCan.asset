@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 964a513d60e6b5349b83be6ba3b7dc3f, type: 3}
-  m_Name: TomatoSeed
+  m_Name: WateringCan
   m_EditorClassIdentifier: Assembly-CSharp::ShopSO
-  itemName: Tomato Seed
-  itemSprite: {fileID: 21300000, guid: 9a79f4b755444274c8a54724048976a1, type: 3}
+  itemName: 
+  itemSprite: {fileID: 0}
   itemGameobject: {fileID: 0}
-  plantSO: {fileID: 11400000, guid: 3f7edeeb4eefe014fad82833f3f032aa, type: 2}
+  plantSO: {fileID: 0}
   spawnPos: {x: 0, y: 0, z: 0}
-  itemPrice: 40
+  itemPrice: 0
   itemType: 0

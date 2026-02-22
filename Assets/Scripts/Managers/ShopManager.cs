@@ -58,21 +58,31 @@ public class ShopManager : MonoBehaviour
         Hide();
         foreach(ShopSO shopSO in shopSOList)
         {
-            switch (shopSO.itemType)
-            {
-                case ShopSingleItem.itemType.seed:
-                    spawnTemplate(shopSO, SeedContainer);
-                    break;
-                case ShopSingleItem.itemType.seedStorage:
-                    spawnTemplate(shopSO, SeedStorageContainer);
-                    break;
-            }
+            spawnTemplate(shopSO, shopSO.itemType);
         }
     }
 
-    void spawnTemplate(ShopSO shopSO,Transform container)
+    void spawnTemplate(ShopSO shopSO,ShopSingleItem.itemType itemType)
     {
-        Transform itemTransform = Instantiate(template, container);
+        Transform itemTransform;
+        switch (itemType)
+        {
+            case ShopSingleItem.itemType.seed:
+                itemTransform = Instantiate(template, SeedContainer);
+                itemTransform.GetComponent<ShopSingleItem>().SetPlantSO(shopSO.plantSO);
+                break;
+            case ShopSingleItem.itemType.seedStorage:
+                itemTransform = Instantiate(template, SeedStorageContainer);
+                itemTransform.GetComponent<ShopSingleItem>().SetPlantSO(shopSO.plantSO);
+                break;
+            case ShopSingleItem.itemType.tool:
+                itemTransform = Instantiate(template, ToolsContainer);
+                itemTransform.GetComponent<ShopSingleItem>().SetToolSO(shopSO.toolsSO);
+                break;
+            default: itemTransform = null; break;
+        }
+
+        itemTransform.GetComponent<ShopSingleItem>().SetItemType(itemType);
         itemTransform.GetComponent<ShopSingleItem>().SetTemplate(shopSO.itemPrice, shopSO.itemSprite);
         itemTransform.gameObject.SetActive(true);
     }
@@ -97,7 +107,7 @@ public class ShopManager : MonoBehaviour
         if(purchasedSeedStorageList.Count == 0)
         {
             //not purchased anything yet
-            SpawnFromShopSOList(plantSO);
+            SpawnSeedStorageFromShopSOList(plantSO);
    
         }
         foreach (SeedStorage seedStorage in purchasedSeedStorageList)
@@ -107,10 +117,15 @@ public class ShopManager : MonoBehaviour
                 return;
             }
         }
-        SpawnFromShopSOList(plantSO);
+        SpawnSeedStorageFromShopSOList(plantSO);
     }
 
-    void SpawnFromShopSOList(PlantSO plantSO)
+    public void purchaseTools(ToolsSO toolsSO)
+    {
+
+    }
+
+    void SpawnSeedStorageFromShopSOList(PlantSO plantSO)
     {
         foreach (ShopSO shopSO in shopSOList)
         {
