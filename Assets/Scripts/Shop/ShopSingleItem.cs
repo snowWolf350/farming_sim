@@ -33,10 +33,10 @@ public class ShopSingleItem : MonoBehaviour
             switch (thisItemType)
             {
                 case itemType.seed:
-                    ShopManager.Instance.PurchaseSeeds(plantSO);
+                    ShopManager.Instance.PurchaseSeeds(plantSO,lifeAmount);
                     break;
                 case itemType.seedStorage:
-                    ShopManager.Instance.purchaseSeedStorage(plantSO);
+                    ShopManager.Instance.purchaseSeedStorage(plantSO,lifeAmount);
                     break;
                 case itemType.tool:
                     ShopManager.Instance.purchaseTools(toolSO);
@@ -64,5 +64,6 @@ public class ShopSingleItem : MonoBehaviour
     {
         plantIcon.sprite = itemIcom;
         lifeAmountText.text = lifeAmount.ToString();
+        this.lifeAmount = lifeAmount;
     }
 }

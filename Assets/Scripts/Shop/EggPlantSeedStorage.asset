@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 964a513d60e6b5349b83be6ba3b7dc3f, type: 3}
+  m_Name: EggPlantSeedStorage
+  m_EditorClassIdentifier: Assembly-CSharp::ShopSO
+  itemName: EggPlant Seed Storage
+  itemSprite: {fileID: 21300000, guid: 50beec186b458794a9f1806ddf76b49a, type: 3}
+  itemGameobject: {fileID: 6465626418999209273, guid: 8803f326d8407524785b1515a502ebaf, type: 3}
+  plantSO: {fileID: 11400000, guid: e0c0b84e8a5a60f409391b879cd116c4, type: 2}
+  toolsSO: {fileID: 0}
+  spawnPos: {x: 3.34, y: 0, z: 6.26}
+  itemPrice: 20
+  itemType: 1

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using static DeliveryManager;
 
@@ -30,6 +31,8 @@ public class DeliveryManager : MonoBehaviour
     //shop
     [Header("Shop UI")]
     int lifeAmount = 0;
+
+    [SerializeField] TextMeshProUGUI PlayerlifeAmountText;
 
     private void Awake()
     {
@@ -88,7 +91,13 @@ public class DeliveryManager : MonoBehaviour
         {
             lifeAmount += deliverdItem.plantSO.lifeAmount * deliverdItem.itemCount;
         }
-        ShopManager.Instance.updateLifeAmountUI(lifeAmount);
+        updateLifeAmountUI();
+    }
+
+    public void DecreaseLifeAmount(int itemCost)
+    {
+        lifeAmount -= itemCost;
+        updateLifeAmountUI();
     }
 
     void CreateNewTemplate(int deliverCount,Sprite plantSprite)
@@ -111,6 +120,10 @@ public class DeliveryManager : MonoBehaviour
         }
     }
 
+    public int GetCurrentLifeAmount()
+    {
+        return lifeAmount;
+    }
 
 
     int GetDeliveredItemIndex(PlantSO plantSO)
@@ -130,4 +143,15 @@ public class DeliveryManager : MonoBehaviour
         return deliveredPlantItemList;
     }
 
+    public void updateLifeAmountUI()
+    {
+        PlayerlifeAmountText.text = lifeAmount.ToString();
+    }
+
+
+    [ContextMenu("increase")]
+    void setLifeAmount()
+    {
+        lifeAmount = 200;
+    }
 }

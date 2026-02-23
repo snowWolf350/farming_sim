@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 964a513d60e6b5349b83be6ba3b7dc3f, type: 3}
-  m_Name: WateringCan
+  m_Name: MushroomSeed
   m_EditorClassIdentifier: Assembly-CSharp::ShopSO
-  itemName: Watering Can
-  itemSprite: {fileID: 21300000, guid: 61de1341571ad58409062d55e902e20c, type: 3}
+  itemName: EggPlant Seed
+  itemSprite: {fileID: 21300000, guid: 50beec186b458794a9f1806ddf76b49a, type: 3}
   itemGameobject: {fileID: 0}
-  plantSO: {fileID: 0}
-  toolsSO: {fileID: 11400000, guid: cef47e63442a52e469ed412322e44e69, type: 2}
+  plantSO: {fileID: 11400000, guid: e0c0b84e8a5a60f409391b879cd116c4, type: 2}
+  toolsSO: {fileID: 0}
   spawnPos: {x: 0, y: 0, z: 0}
   itemPrice: 40
-  itemType: 2
+  itemType: 0

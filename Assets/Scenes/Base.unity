@@ -3906,6 +3906,7 @@ MonoBehaviour:
   shopSOList:
   - {fileID: 11400000, guid: 79bd021f4319875448fa4fd25c38e384, type: 2}
   - {fileID: 11400000, guid: 7508c152d63fe6d42af691a05819cb59, type: 2}
+  - {fileID: 11400000, guid: 364d49ee38dac604aabb197ef57da97b, type: 2}
   PlayerlifeAmountText: {fileID: 156099232}
   UI: {fileID: 1901330512}
   SeedStorageContainer: {fileID: 1075868652}
@@ -5477,7 +5478,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopSingleItem
   thisItemType: 1
-  plantSO: {fileID: 11400000, guid: 3f7edeeb4eefe014fad82833f3f032aa, type: 2}
+  plantSO: {fileID: 0}
+  toolSO: {fileID: 0}
   buyButton: {fileID: 526175498}
   plantIcon: {fileID: 1944466811}
   lifeAmountText: {fileID: 938485966}

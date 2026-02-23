@@ -52,8 +52,11 @@ public class SeedStorage : MonoBehaviour,ICanInteract
 
     public void IncreaseSeeds(int seedCount)
     {
-        currentSeedsCount += seedCount;
-        OnSeedCountUpdated?.Invoke(this, new EventArgs());
+        if (currentSeedsCount < maxSeedCapacity)
+        {
+            currentSeedsCount += seedCount;
+            OnSeedCountUpdated?.Invoke(this, new EventArgs()); 
+        }
     }
     public void DecreaseSeeds(int seedCount)
     {

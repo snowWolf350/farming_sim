@@ -12,8 +12,6 @@ public class ShopManager : MonoBehaviour
 
     List<SeedStorage> purchasedSeedStorageList;
 
-
-    [SerializeField] TextMeshProUGUI PlayerlifeAmountText;
     [SerializeField] GameObject UI;
 
     [Header("containers")]
@@ -54,7 +52,6 @@ public class ShopManager : MonoBehaviour
 
     private void Start()
     {
-        seedStorageButton.Select();
         Hide();
         foreach(ShopSO shopSO in shopSOList)
         {
@@ -87,37 +84,47 @@ public class ShopManager : MonoBehaviour
         itemTransform.gameObject.SetActive(true);
     }
 
-    public void PurchaseSeeds(PlantSO plantSO)
+    public void PurchaseSeeds(PlantSO plantSO, int itemCost)
     {
         if (purchasedSeedStorageList.Count == 0) return;
 
-        foreach(SeedStorage seedStorage in purchasedSeedStorageList)
+        if (itemCost < DeliveryManager.Instance.GetCurrentLifeAmount())
         {
-            if(seedStorage.GetPlantSO() == plantSO)
+            foreach (SeedStorage seedStorage in purchasedSeedStorageList)
             {
-                //there is a storage of this seed
-                seedStorage.IncreaseSeeds(1);
-            }
+                if (seedStorage.GetPlantSO() == plantSO)
+                {
+                    //there is a storage of this seed
+                    seedStorage.IncreaseSeeds(1);
+                    DeliveryManager.Instance.DecreaseLifeAmount(itemCost);
+                }
+            } 
         }
     }
 
-    public void purchaseSeedStorage(PlantSO plantSO)
+    public void purchaseSeedStorage(PlantSO plantSO,int itemCost)
     {
         //if seed storage is there, else spawn a new seed storage store it in purchasedstorage list
-        if(purchasedSeedStorageList.Count == 0)
+        if (itemCost < DeliveryManager.Instance.GetCurrentLifeAmount())
         {
-            //not purchased anything yet
-            SpawnSeedStorageFromShopSOList(plantSO);
-   
-        }
-        foreach (SeedStorage seedStorage in purchasedSeedStorageList)
-        {
-            if(seedStorage.GetPlantSO() == plantSO)
+            //player can afford it 
+            if (purchasedSeedStorageList.Count == 0)
             {
-                return;
+                //not purchased anything yet
+                SpawnSeedStorageFromShopSOList(plantSO);
+                DeliveryManager.Instance.DecreaseLifeAmount(itemCost);
+
             }
+            foreach (SeedStorage seedStorage in purchasedSeedStorageList)
+            {
+                if (seedStorage.GetPlantSO() == plantSO)
+                {
+                    return;
+                }
+            }
+            DeliveryManager.Instance.DecreaseLifeAmount(itemCost);
+            SpawnSeedStorageFromShopSOList(plantSO); 
         }
-        SpawnSeedStorageFromShopSOList(plantSO);
     }
 
     public void purchaseTools(ToolsSO toolsSO)
@@ -140,13 +147,6 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-   
-
-    public void updateLifeAmountUI(int lifeamount)
-    {
-        PlayerlifeAmountText.text = lifeamount.ToString();
-    }
-
     public void Hide()
     {
         UI.SetActive(false);
@@ -154,5 +154,6 @@ public class ShopManager : MonoBehaviour
     public void Show()
     {
         UI.SetActive(true);
+        seedStorageButton.onClick.Invoke();
     }
 }

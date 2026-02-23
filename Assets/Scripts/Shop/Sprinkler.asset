@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 964a513d60e6b5349b83be6ba3b7dc3f, type: 3}
-  m_Name: WateringCan
+  m_Name: Sprinkler
   m_EditorClassIdentifier: Assembly-CSharp::ShopSO
-  itemName: Watering Can
-  itemSprite: {fileID: 21300000, guid: 61de1341571ad58409062d55e902e20c, type: 3}
-  itemGameobject: {fileID: 0}
+  itemName: Sprinkler
+  itemSprite: {fileID: 21300000, guid: c52b17a739472d74f87c1d75c3946c9d, type: 3}
+  itemGameobject: {fileID: 7841020860589090259, guid: d22781f4e7190084c897fe4e582fa5e3, type: 3}
   plantSO: {fileID: 0}
-  toolsSO: {fileID: 11400000, guid: cef47e63442a52e469ed412322e44e69, type: 2}
+  toolsSO: {fileID: 11400000, guid: 1530ae560fcb281439b689e1fbe512e1, type: 2}
   spawnPos: {x: 0, y: 0, z: 0}
-  itemPrice: 40
+  itemPrice: 20
   itemType: 2
