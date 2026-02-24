@@ -84,7 +84,7 @@ public class ShopManager : MonoBehaviour
         itemTransform.gameObject.SetActive(true);
     }
 
-    public void PurchaseSeeds(PlantSO plantSO, int itemCost)
+    public void PurchaseSeeds(PlantSO plantSO, int itemCost,int itemAmount)
     {
         if (purchasedSeedStorageList.Count == 0) return;
 
@@ -95,7 +95,7 @@ public class ShopManager : MonoBehaviour
                 if (seedStorage.GetPlantSO() == plantSO)
                 {
                     //there is a storage of this seed
-                    seedStorage.IncreaseSeeds(1);
+                    seedStorage.IncreaseSeeds(itemAmount);
                     DeliveryManager.Instance.DecreaseLifeAmount(itemCost);
                 }
             } 

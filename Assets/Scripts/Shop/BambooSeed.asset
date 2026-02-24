@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BambooSeed
   m_EditorClassIdentifier: Assembly-CSharp::ShopSO
   itemName: Bamboo Seed
-  itemSprite: {fileID: 21300000, guid: 12021f3f14478c643a1fc14e9dfecff0, type: 3}
+  itemSprite: {fileID: 21300000, guid: 707d45a6e9ae53743b25ff12cad533cf, type: 3}
   itemGameobject: {fileID: 0}
   plantSO: {fileID: 11400000, guid: 009cd03a031470445b60ea68059361a6, type: 2}
   toolsSO: {fileID: 0}
