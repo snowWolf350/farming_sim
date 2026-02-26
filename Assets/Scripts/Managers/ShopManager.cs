@@ -113,6 +113,7 @@ public class ShopManager : MonoBehaviour
                 //not purchased anything yet
                 SpawnSeedStorageFromShopSOList(plantSO);
                 DeliveryManager.Instance.DecreaseLifeAmount(itemCost);
+                return;
 
             }
             foreach (SeedStorage seedStorage in purchasedSeedStorageList)

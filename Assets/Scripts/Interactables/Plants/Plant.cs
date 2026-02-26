@@ -13,6 +13,8 @@ public class Plant : MonoBehaviour, ICanInteract
     public Vector3 fullyDevelopedColliderSize;
     public Vector3 fullyDevelopedColliderCenter;
 
+    string interactText;
+
     public static event EventHandler<OnPlantHarvestedEventArgs> OnPlantHarvested;
 
     public class OnPlantHarvestedEventArgs : EventArgs
@@ -40,15 +42,15 @@ public class Plant : MonoBehaviour, ICanInteract
         activeVisual = transform.GetChild(0).gameObject;
         boxCollider.size = seedColliderSize;
         boxCollider.center = seedColliderCenter;
-        boxCollider.enabled = false;
+        interactText = string.Concat("Pickup " + plantSO.name);
     }
-
     public void Interact(Player player)
     {
 
         switch (currentGrowthLevel)
         {
             case GrowthLevel.seed:
+                setParent(player.GetInteractSpawn());
                 player.inventory.AddPlantInList(this, UnityEngine.Random.Range(plantSO.halfYieldMin, plantSO.halfYieldMax));
                 break;
             case GrowthLevel.halfDeveloped:
@@ -132,5 +134,15 @@ public class Plant : MonoBehaviour, ICanInteract
     public void DestroySelf()
     {
         Destroy(gameObject);
+    }
+
+    public void DisableCollider()
+    {
+        boxCollider.enabled = false;
+    }
+
+    public string GetInteractText()
+    {
+        return interactText;
     }
 }

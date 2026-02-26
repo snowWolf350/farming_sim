@@ -14,12 +14,44 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
 
     float globalTimer;
 
+    string interactText;
+
     public event EventHandler<IHasProgress.onProgressChangedEventArgs> onProgressChanged;
 
     private void Start()
     {
         Plant.OnPlantHarvested += Plant_OnPlantHarvested;
+        Player.OnInteractableChanged += Player_OnInteractableChanged;
         decayingParticleSystem.Stop();
+
+        interactText = "Plant plant seed";
+    }
+
+    private void Player_OnInteractableChanged(object sender, Player.OnInteractableChangedEventArgs e)
+    {
+        if (e.Interactable is PlantSite == false) {
+            interactText = "";
+            return;
+        }
+
+        if (Player.Instance.GetEquippedInteractable() is Plant && Player.Instance.GetEquippedPlant().GetCurrentGrowthLevel() == Plant.GrowthLevel.seed)
+        {
+            //player is having a plant 
+            interactText = string.Concat("Plant " + Player.Instance.GetEquippedPlant().GetPlantSO().name + " here");
+        }
+        if (Player.Instance.GetEquippedInteractable() is Tools)
+        {
+            //player is having a tool 
+            if (Player.Instance.GetEquippedTool().GetToolSO() == wateringCan)
+            {
+                //player is carrying water can
+                interactText = "water this area";
+            }
+            else
+            {
+                interactText = "disinfect this site";
+            }
+        }
     }
 
     private void Plant_OnPlantHarvested(object sender, Plant.OnPlantHarvestedEventArgs e)
@@ -163,6 +195,7 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
                 {
                     //plant is decaying and player has sprinkler
                     activePlant.SetPlantGrowthLevel(Plant.GrowthLevel.fullDeveloped);
+                    player.GetEquippedTool().DecreaseDurability();
                 }
             }
         }
@@ -187,5 +220,10 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
             activePlant = plant;
             activePlant.setParent(spawnTransform);
         }
+    }
+
+    public string GetInteractText()
+    {
+        return interactText;
     }
 }

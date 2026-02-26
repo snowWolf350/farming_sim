@@ -9,12 +9,15 @@ public class SeedStorage : MonoBehaviour,ICanInteract
     public int maxSeedCapacity;
     int currentSeedsCount;
 
+    string interactText;
+
     public event EventHandler OnSeedCountUpdated;
 
     private void Start()
     {
         currentSeedsCount = startingSeedsCount;
         OnSeedCountUpdated?.Invoke(this, new EventArgs());
+        interactText = string.Concat("Pickup " + plantSO.name + " seed");
     }
 
     public void Interact(Player player)
@@ -33,6 +36,7 @@ public class SeedStorage : MonoBehaviour,ICanInteract
                 //repositions seed into the interact transform
                 plantGO.transform.localPosition = Vector3.zero;
                 plantGO.transform.localRotation = Quaternion.identity;
+                plantGO.GetComponent<BoxCollider>().enabled = false;
                 // sets and equips the current plant
                 player.inventory.EquipNewPlant(plantGO.GetComponent<Plant>());
             }
@@ -73,5 +77,9 @@ public class SeedStorage : MonoBehaviour,ICanInteract
     {
         return plantSO;
     }
-   
+
+    public string GetInteractText()
+    {
+        return interactText;
+    }
 }

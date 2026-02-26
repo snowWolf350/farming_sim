@@ -9,6 +9,8 @@ public class Tools : MonoBehaviour, ICanInteract, IHasProgress
 
     public event EventHandler<IHasProgress.onProgressChangedEventArgs> onProgressChanged;
 
+    string interactText;
+
     private void Start()
     {
         toolDurability = toolsSO.DurabilityMax;
@@ -16,6 +18,7 @@ public class Tools : MonoBehaviour, ICanInteract, IHasProgress
         {
             progressNormalized = toolDurability / toolsSO.DurabilityMax,
         });
+        interactText = string.Concat( "Pick up" + toolsSO.toolName);
     }
     public void Interact(Player player)
     {
@@ -79,5 +82,10 @@ public class Tools : MonoBehaviour, ICanInteract, IHasProgress
     public void DestroySelf()
     {
         Destroy(gameObject);
+    }
+
+    public string GetInteractText()
+    {
+        return interactText;
     }
 }

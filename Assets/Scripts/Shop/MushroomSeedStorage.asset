@@ -17,6 +17,6 @@ MonoBehaviour:
   itemGameobject: {fileID: 4496494565144310805, guid: d3dbd4ad70af79f4eb869e2bcf495375, type: 3}
   plantSO: {fileID: 11400000, guid: 811a141285033804b9cb9748ec74729d, type: 2}
   toolsSO: {fileID: 0}
-  spawnPos: {x: 2.34, y: 0, z: 6.26}
+  spawnPos: {x: 6.4, y: 0, z: 6.26}
   itemPrice: 20
   itemType: 1
