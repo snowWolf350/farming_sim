@@ -27,6 +27,9 @@ public class ShopManager : MonoBehaviour
     [SerializeField] Button seedButton;
     [SerializeField] Button ToolsButton;
 
+    [Header("ToolSpawner")]
+    [SerializeField] ToolSpawner toolSpawner;
+
     private void Awake()
     {
         Instance = this;
@@ -128,9 +131,21 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    public void purchaseTools(ToolsSO toolsSO)
+    public void purchaseTools(ToolsSO toolsSO,int itemCost)
     {
-
+        if (itemCost < DeliveryManager.Instance.GetCurrentLifeAmount())
+        {
+            //player can afford this 
+            foreach (ShopSO shopSO in shopSOList)
+            {
+                if (shopSO.toolsSO == null) continue;
+                if (toolsSO == shopSO.toolsSO)
+                {
+                    //this is the tool the player wants 
+                    toolSpawner.spawnTool(toolsSO);
+                }
+            }
+        }
     }
 
     void SpawnSeedStorageFromShopSOList(PlantSO plantSO)

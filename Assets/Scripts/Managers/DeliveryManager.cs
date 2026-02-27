@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static DeliveryManager;
 
 public class DeliveryManager : MonoBehaviour
 {
@@ -52,6 +51,7 @@ public class DeliveryManager : MonoBehaviour
 
         if (deliveredPlantItemList.Count >= 1)
         {
+            bool plantIsThere = false;
             //atleast one has been delivered
             foreach (DeliverdItem deliverdItem in deliveredPlantItemList)
             {
@@ -61,15 +61,16 @@ public class DeliveryManager : MonoBehaviour
                     deliverdItem.itemCount += deliveredPlantCount;
                     UpdateTemplateCount(deliverdItem.itemCount, deliverdItem.plantSO);
                     UpdateLifeAmount();
-                }
-                else
-                {
-                    //new plant being added to the delivery list
-                    deliveredPlantItemList.Add(new DeliverdItem(e.plant.GetPlantSO(), deliveredPlantCount));
-                    CreateNewTemplate(deliveredPlantCount, e.plant.GetPlantSO().plantIcon);
-                    UpdateLifeAmount();
+                    plantIsThere = true;
                     break;
                 }
+            }
+            if (!plantIsThere)
+            {
+                //new plant being added to the delivery list
+                deliveredPlantItemList.Add(new DeliverdItem(e.plant.GetPlantSO(), deliveredPlantCount));
+                CreateNewTemplate(deliveredPlantCount, e.plant.GetPlantSO().plantIcon);
+                UpdateLifeAmount();
             }
         }
         else

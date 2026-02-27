@@ -48,7 +48,7 @@ public class ShopSingleItem : MonoBehaviour
                     ShopManager.Instance.purchaseSeedStorage(plantSO,lifeAmount);
                     break;
                 case itemType.tool:
-                    ShopManager.Instance.purchaseTools(toolSO);
+                    ShopManager.Instance.purchaseTools(toolSO,lifeAmount);
                     break;
             }
         });

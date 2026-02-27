@@ -4,6 +4,7 @@ public class ToolsSO : ScriptableObject
 {
     public string toolName;
     public Sprite toolSprite;
+    public GameObject toolsPrefab;
     public int DurabilityMax;
     public int DurabilityDecayMin;
     public int DurabilityDecayMax;

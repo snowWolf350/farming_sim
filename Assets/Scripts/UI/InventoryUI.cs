@@ -37,7 +37,7 @@ public class InventoryUI : MonoBehaviour
         }
         for(int i = 0; i < e.passedToolItemList.Count; i++)
         {
-            if (e.passedToolItemList[i].tool == Player.Instance.GetEquippedInteractable() as Tools)
+            if (e.passedToolItemList[i].tool == Player.Instance.GetEquippedTool() as Tools)
             {
                 //player added tool
                 ToolImageBackgroundList[i].color = equippedBackgroundColor;
@@ -81,7 +81,7 @@ public class InventoryUI : MonoBehaviour
 
         for (int i = 0; i < e.passedPlantItemList.Count; i++)
         {
-            if (e.passedPlantItemList[i].plant == Player.Instance.GetEquippedInteractable() as Plant)
+            if (e.passedPlantItemList[i].plant == Player.Instance.GetEquippedPlant() as Plant)
             {
                 //player has a equipped a plant
                 plantImageBackgroundList[i].color = equippedBackgroundColor;

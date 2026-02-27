@@ -52,6 +52,10 @@ public class Plant : MonoBehaviour, ICanInteract
             case GrowthLevel.seed:
                 setParent(player.GetInteractSpawn());
                 player.inventory.AddPlantInList(this, UnityEngine.Random.Range(plantSO.halfYieldMin, plantSO.halfYieldMax));
+                OnPlantHarvested?.Invoke(this, new OnPlantHarvestedEventArgs
+                {
+                    plant = this,
+                });
                 break;
             case GrowthLevel.halfDeveloped:
                 SetPlantGrowthLevel(GrowthLevel.fruit);

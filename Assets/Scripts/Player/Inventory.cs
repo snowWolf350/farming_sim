@@ -293,17 +293,40 @@ public class Inventory : MonoBehaviour
     }
     public void AddToolInList(Tools tool)
     {
+        
         if (CheckToolInInventory(tool.GetToolSO(), out int itemIndex))
         {
             //player has this tool item in inventory
+            Tools equippedTool = toolItemList[itemIndex].tool;
 
-        }
-        else
-        {
+            equippedTool.setParent(null);
+            equippedTool.transform.position = tool.transform.position;
+            equippedTool.GetRigidbody().isKinematic = false;
+
+            RemoveToolInList(equippedTool);
+
+            tool.setParent(Player.Instance.GetInteractSpawn());
+            tool.GetRigidbody().isKinematic = true;
+
             BoxCollider collider = tool.gameObject.GetComponent<BoxCollider>();
             collider.enabled = false;
             toolItem toolitem = new(tool, 1);
             toolItemList.Add(toolitem);
+
+            Player.Instance.SetEquippedTool(tool);
+            toggleEqupipedItem(tool);
+        }
+        else
+        {
+            tool.setParent(Player.Instance.GetInteractSpawn());
+            tool.GetRigidbody().isKinematic = true;
+            BoxCollider collider = tool.gameObject.GetComponent<BoxCollider>();
+            collider.enabled = false;
+            toolItem toolitem = new(tool, 1);
+            toolItemList.Add(toolitem);
+
+            Player.Instance.SetEquippedTool(tool);
+            toggleEqupipedItem(tool);
         }
         onToolItemListChanged?.Invoke(this, new onToolItemAddedEventArgs
         {
@@ -356,14 +379,6 @@ public class Inventory : MonoBehaviour
         itemIndex = 0;
         return false;
     }
-    public void EquipNewTool(Tools tool)
-    {
-        Player.Instance.SetEquippedTool(tool);
-        toggleEqupipedItem(tool);
-
-        // add in list
-        AddToolInList(tool);
-    }
     #endregion
 
 
@@ -376,6 +391,7 @@ public class Inventory : MonoBehaviour
             Plant plant = iCanInteract as Plant;
             //player has equipped plant
             Player.Instance.SetEquippedPlant(plant);
+            Player.Instance.SetEquippedTool(null);
             foreach (Transform child in plant.transform.parent)
             {
                 if (child.GetComponent<Plant>() == plant)
@@ -393,6 +409,7 @@ public class Inventory : MonoBehaviour
             Tools tool = iCanInteract as Tools;
             //player has equipped plant
             Player.Instance.SetEquippedTool(tool);
+            Player.Instance.SetEquippedPlant(null);
 
             foreach (Transform child in tool.transform.parent)
             {

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5849247416430822683}
   - component: {fileID: 4238871586860827267}
   - component: {fileID: 6580423239409998270}
+  - component: {fileID: 2606649040977924524}
   m_Layer: 0
   m_Name: WateringCan
   m_TagString: Untagged
@@ -69,6 +70,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tools
   toolsSO: {fileID: 11400000, guid: cef47e63442a52e469ed412322e44e69, type: 2}
+--- !u!54 &2606649040977924524
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3431283313494732}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &168838025961865111
 GameObject:
   m_ObjectHideFlags: 0

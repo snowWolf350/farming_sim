@@ -25,9 +25,8 @@ public class Player : MonoBehaviour
     float interactDistance = 1.5f;
     Ray interactRay;
     RaycastHit interactHit;
-    
+
     ICanInteract Interactable;
-    [SerializeField]ICanInteract equippedInteractable;
 
     Plant equippedPlant;
     
@@ -213,19 +212,12 @@ public class Player : MonoBehaviour
     public void SetEquippedPlant(Plant plant)
     {
         equippedPlant = plant;
-        equippedInteractable = equippedPlant;
         
     }
 
     public void SetEquippedTool(Tools tool)
     {
             equippedTool = tool;
-            equippedInteractable = equippedTool;
-    }
-
-    public ICanInteract GetEquippedInteractable()
-    {
-        return equippedInteractable;
     }
     public bool HasEquippedTool()
     {

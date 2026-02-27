@@ -34,12 +34,15 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
             return;
         }
 
-        if (Player.Instance.GetEquippedInteractable() is Plant && Player.Instance.GetEquippedPlant().GetCurrentGrowthLevel() == Plant.GrowthLevel.seed)
+        if (Player.Instance.GetEquippedPlant() != null)
         {
-            //player is having a plant 
-            interactText = string.Concat("Plant " + Player.Instance.GetEquippedPlant().GetPlantSO().name + " here");
+            if (Player.Instance.GetEquippedPlant().GetCurrentGrowthLevel() == Plant.GrowthLevel.seed)
+            {
+                //player is having a plant 
+                interactText = string.Concat("Plant " + Player.Instance.GetEquippedPlant().GetPlantSO().name + " here");
+            } 
         }
-        if (Player.Instance.GetEquippedInteractable() is Tools)
+        if (Player.Instance.GetEquippedTool() != null)
         {
             //player is having a tool 
             if (Player.Instance.GetEquippedTool().GetToolSO() == wateringCan)
@@ -160,7 +163,7 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
 
     public void Interact(Player player)
     {
-        if (Player.Instance.GetEquippedInteractable() is Plant && activePlant == null)
+        if (Player.Instance.GetEquippedPlant() != null && activePlant == null)
         {
             //player is carrying a plant and this site is empty
             if (player.inventory.GetPlantItemCount(player.GetEquippedPlant()) > 1)
@@ -179,7 +182,7 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
             }
 
         }
-        if (Player.Instance.GetEquippedInteractable() is Tools && activePlant != null )
+        if (Player.Instance.GetEquippedTool() != null && activePlant != null )
         {
             //water plant and make it start growing
             if (player.GetEquippedTool().GetToolSO() == wateringCan && !plantIsGrowing)

@@ -22,12 +22,11 @@ public class DeliveryChute : MonoBehaviour,ICanInteract
 
     public void Interact(Player player)
     {
-        if (player.GetEquippedInteractable() is Plant)
+        if (player.GetEquippedPlant() != null)
         {
             if (player.GetEquippedPlant().GetPlantSO() == plantSO && player.GetEquippedPlant().GetCurrentGrowthLevel() == Plant.GrowthLevel.fruit)
             {
                 //player is carrying the correct fruit
-                Debug.Log("correct delivery");
                 OnDeliverySuccess?.Invoke(this, new OnDeliveryEventArgs
                 {
                     plant = player.GetEquippedPlant(),

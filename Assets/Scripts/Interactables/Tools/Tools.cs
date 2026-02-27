@@ -5,6 +5,8 @@ public class Tools : MonoBehaviour, ICanInteract, IHasProgress
 {
     [SerializeField] ToolsSO toolsSO;
 
+    Rigidbody toolRigidbody;
+
     int toolDurability;
 
     public event EventHandler<IHasProgress.onProgressChangedEventArgs> onProgressChanged;
@@ -19,28 +21,11 @@ public class Tools : MonoBehaviour, ICanInteract, IHasProgress
             progressNormalized = toolDurability / toolsSO.DurabilityMax,
         });
         interactText = string.Concat( "Pick up" + toolsSO.toolName);
+        this.toolRigidbody = GetComponent<Rigidbody>();
     }
     public void Interact(Player player)
     {
-        if (player.inventory.CheckToolInInventory(toolsSO, out int itemIndex))
-        {
-            //player has this tool in his inventory
-                //swap position
-                player.GetEquippedTool().setParent(null);
-                player.GetEquippedTool().transform.position = this.transform.position;
-                player.GetEquippedTool().gameObject.SetActive(true);
-                //remove from inventory and player
-                player.inventory.RemoveToolInList(this);
-                player.SetEquippedTool(null);
-                //equip new tool
-                setParent(player.GetInteractSpawn());
-                player.inventory.EquipNewTool(this);
-        }
-        else
-        {
-            setParent(player.GetInteractSpawn());
-            player.inventory.EquipNewTool(this);
-        }
+        player.inventory.AddToolInList(this);
     }
 
     public void setParent(Transform transform)
@@ -58,6 +43,10 @@ public class Tools : MonoBehaviour, ICanInteract, IHasProgress
     public int GetToolDurability()
     {
         return toolDurability;
+    }
+    public Rigidbody GetRigidbody()
+    {
+        return toolRigidbody;
     }
 
     [ContextMenu("decrease durability")]
