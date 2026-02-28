@@ -14,7 +14,7 @@ public class ToolUI : MonoBehaviour
     {
         HasProgress = HasProgressGameObject.GetComponent<IHasProgress>();
         HasProgress.onProgressChanged += HasProgress_onProgressChanged;
-        BarImage.fillAmount = 0;
+        BarImage.fillAmount = 1;
         BarImage.color = fullDurabilityColor;
     }
 

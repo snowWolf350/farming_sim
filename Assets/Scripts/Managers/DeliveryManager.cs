@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static DeliveryManager;
 
 public class DeliveryManager : MonoBehaviour
 {
@@ -33,6 +34,10 @@ public class DeliveryManager : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI PlayerlifeAmountText;
 
+    int lifeAmountDelivered;
+
+    const int LifeAmountRequired = 500;
+
     private void Awake()
     {
         deliveredPlantItemList = new List<DeliverdItem>();
@@ -48,6 +53,7 @@ public class DeliveryManager : MonoBehaviour
     private void DeliveryChute_OnDeliverySuccess(object sender, DeliveryChute.OnDeliveryEventArgs e)
     {
         int deliveredPlantCount = Inventory.Instance.GetPlantItemCount(e.plant,Plant.GrowthLevel.fruit);
+        int deliveredPlantCost = deliveredPlantCount * e.plant.GetPlantSO().lifeAmount;
 
         if (deliveredPlantItemList.Count >= 1)
         {
@@ -60,7 +66,7 @@ public class DeliveryManager : MonoBehaviour
                     //some plant of this type is aldready delivered
                     deliverdItem.itemCount += deliveredPlantCount;
                     UpdateTemplateCount(deliverdItem.itemCount, deliverdItem.plantSO);
-                    UpdateLifeAmount();
+                    UpdateLifeAmount(deliveredPlantCost);
                     plantIsThere = true;
                     break;
                 }
@@ -70,7 +76,7 @@ public class DeliveryManager : MonoBehaviour
                 //new plant being added to the delivery list
                 deliveredPlantItemList.Add(new DeliverdItem(e.plant.GetPlantSO(), deliveredPlantCount));
                 CreateNewTemplate(deliveredPlantCount, e.plant.GetPlantSO().plantIcon);
-                UpdateLifeAmount();
+                UpdateLifeAmount(deliveredPlantCost);
             }
         }
         else
@@ -78,20 +84,17 @@ public class DeliveryManager : MonoBehaviour
             //delivered list is empty
             deliveredPlantItemList.Add(new DeliverdItem(e.plant.GetPlantSO(), deliveredPlantCount));
             CreateNewTemplate(deliveredPlantCount, e.plant.GetPlantSO().plantIcon);
-            UpdateLifeAmount();
+            UpdateLifeAmount(deliveredPlantCost);
         }
 
             
         Player.Instance.inventory.clearPlantInList(e.plant);
     }
 
-    void UpdateLifeAmount()
+    void UpdateLifeAmount(int itemCost)
     {
-        lifeAmount = 0;
-        foreach (DeliverdItem deliverdItem in deliveredPlantItemList)
-        {
-            lifeAmount += deliverdItem.plantSO.lifeAmount * deliverdItem.itemCount;
-        }
+        lifeAmount += itemCost;
+        lifeAmountDelivered += itemCost;
         updateLifeAmountUI();
     }
 
@@ -99,6 +102,15 @@ public class DeliveryManager : MonoBehaviour
     {
         lifeAmount -= itemCost;
         updateLifeAmountUI();
+    }
+
+    public bool CheckRequiredLifeAmount()
+    {
+        if (lifeAmountDelivered > LifeAmountRequired)
+        {
+            return true;
+        }
+        return false;
     }
 
     void CreateNewTemplate(int deliverCount,Sprite plantSprite)

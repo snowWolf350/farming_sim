@@ -37,6 +37,7 @@ public class Inventory : MonoBehaviour
     List<Tools> toolItemList;
 
     public event EventHandler<onPlantItemAddedEventArgs> onPlantItemListChanged;
+    public static event EventHandler onItemPickedUp;
     public event EventHandler<onToolItemAddedEventArgs> onToolItemListChanged;
 
     public class onPlantItemAddedEventArgs : EventArgs
@@ -163,6 +164,7 @@ public class Inventory : MonoBehaviour
             }
         }
         toggleEqupipedItem(plant);
+        onItemPickedUp?.Invoke(this,EventArgs.Empty);
         onPlantItemListChanged?.Invoke(this, new onPlantItemAddedEventArgs
         {
             passedPlantItemList = plantItemlist
@@ -312,6 +314,7 @@ public class Inventory : MonoBehaviour
             Player.Instance.SetEquippedTool(tool);
             toggleEqupipedItem(tool);
         }
+        onItemPickedUp?.Invoke(this, EventArgs.Empty);
         onToolItemListChanged?.Invoke(this, new onToolItemAddedEventArgs
         {
             passedToolItemList = toolItemList

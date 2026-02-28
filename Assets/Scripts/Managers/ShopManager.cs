@@ -14,6 +14,8 @@ public class ShopManager : MonoBehaviour
 
     [SerializeField] GameObject UI;
 
+    public static event EventHandler OnItemBrought;
+
     [Header("containers")]
     [SerializeField] Transform SeedStorageContainer;
     [SerializeField] Transform SeedContainer;
@@ -100,6 +102,7 @@ public class ShopManager : MonoBehaviour
                     //there is a storage of this seed
                     seedStorage.IncreaseSeeds(itemAmount);
                     DeliveryManager.Instance.DecreaseLifeAmount(itemCost);
+                    OnItemBrought?.Invoke(this,EventArgs.Empty);
                 }
             } 
         }
@@ -116,6 +119,7 @@ public class ShopManager : MonoBehaviour
                 //not purchased anything yet
                 SpawnSeedStorageFromShopSOList(plantSO);
                 DeliveryManager.Instance.DecreaseLifeAmount(itemCost);
+                OnItemBrought?.Invoke(this, EventArgs.Empty);
                 return;
 
             }
@@ -127,7 +131,8 @@ public class ShopManager : MonoBehaviour
                 }
             }
             DeliveryManager.Instance.DecreaseLifeAmount(itemCost);
-            SpawnSeedStorageFromShopSOList(plantSO); 
+            SpawnSeedStorageFromShopSOList(plantSO);
+            OnItemBrought?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -143,6 +148,7 @@ public class ShopManager : MonoBehaviour
                 {
                     //this is the tool the player wants 
                     toolSpawner.spawnTool(toolsSO);
+                    OnItemBrought?.Invoke(this, EventArgs.Empty);
                 }
             }
         }

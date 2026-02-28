@@ -17,6 +17,8 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
     string interactText;
 
     public event EventHandler<IHasProgress.onProgressChangedEventArgs> onProgressChanged;
+    public static event EventHandler onPlantWatered;
+    public static event EventHandler onPlantDisinfected;
 
     private void Start()
     {
@@ -188,6 +190,7 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
             if (player.GetEquippedTool().GetToolSO() == wateringCan && !plantIsGrowing)
             {
                 //player has a watering can 
+                onPlantWatered?.Invoke(this, EventArgs.Empty);
                 player.GetEquippedTool().DecreaseDurability();
                 plantIsGrowing = true;
             }
@@ -197,6 +200,7 @@ public class PlantSite : MonoBehaviour, ICanInteract, IHasProgress
                 if (activePlant.GetCurrentGrowthLevel() == Plant.GrowthLevel.decaying && player.GetEquippedTool().GetToolSO() == sprinkler)
                 {
                     //plant is decaying and player has sprinkler
+                    onPlantDisinfected?.Invoke(this, EventArgs.Empty);
                     activePlant.SetPlantGrowthLevel(Plant.GrowthLevel.fullDeveloped);
                     player.GetEquippedTool().DecreaseDurability();
                 }
