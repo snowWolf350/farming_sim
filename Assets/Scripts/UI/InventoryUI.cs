@@ -27,7 +27,7 @@ public class InventoryUI : MonoBehaviour
     {
         for (int i = 0; i < e.passedToolItemList.Count; i++)
         {
-            toolImageList[i].sprite = e.passedToolItemList[i].tool.GetToolSO().toolSprite;
+            toolImageList[i].sprite = e.passedToolItemList[i].GetToolSO().toolSprite;
             toolImageList[i].enabled = true;
         }
 
@@ -37,7 +37,7 @@ public class InventoryUI : MonoBehaviour
         }
         for(int i = 0; i < e.passedToolItemList.Count; i++)
         {
-            if (e.passedToolItemList[i].tool == Player.Instance.GetEquippedTool() as Tools)
+            if (e.passedToolItemList[i] == Player.Instance.GetEquippedTool() as Tools)
             {
                 //player added tool
                 ToolImageBackgroundList[i].color = equippedBackgroundColor;

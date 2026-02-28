@@ -31,24 +31,10 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    [Serializable]
-    public class toolItem
-    {
-        public Tools tool;
-        public float itemDurability;
-
-        public toolItem(Tools newTool, float durability)
-        {
-            tool = newTool;
-            itemDurability = durability;
-        }
-        
-    }
-
     [SerializeField]
     List<plantItem> plantItemlist;
     [SerializeField]
-    List<toolItem> toolItemList;
+    List<Tools> toolItemList;
 
     public event EventHandler<onPlantItemAddedEventArgs> onPlantItemListChanged;
     public event EventHandler<onToolItemAddedEventArgs> onToolItemListChanged;
@@ -59,14 +45,14 @@ public class Inventory : MonoBehaviour
     }
     public class onToolItemAddedEventArgs : EventArgs
     {
-        public List<toolItem> passedToolItemList;
+        public List<Tools> passedToolItemList;
     }
 
     private void Awake()
     {
         Instance = this;
         plantItemlist = new List<plantItem>();
-        toolItemList = new List<toolItem>();
+        toolItemList = new List<Tools>();
     }
 
     private void Start()
@@ -271,8 +257,8 @@ public class Inventory : MonoBehaviour
     {
         if (toolItemList.Count >= 1)
         {
-            Player.Instance.SetEquippedTool(toolItemList[0].tool);
-            toggleEqupipedItem(toolItemList[0].tool);
+            Player.Instance.SetEquippedTool(toolItemList[0]);
+            toggleEqupipedItem(toolItemList[0]);
             onToolItemListChanged?.Invoke(this, new onToolItemAddedEventArgs
             {
                 passedToolItemList = toolItemList
@@ -283,8 +269,8 @@ public class Inventory : MonoBehaviour
     {
         if (toolItemList.Count >= 2)
         {
-            Player.Instance.SetEquippedTool(toolItemList[1].tool);
-            toggleEqupipedItem(toolItemList[1].tool);
+            Player.Instance.SetEquippedTool(toolItemList[1]);
+            toggleEqupipedItem(toolItemList[1]);
             onToolItemListChanged?.Invoke(this, new onToolItemAddedEventArgs
             {
                 passedToolItemList = toolItemList
@@ -297,7 +283,7 @@ public class Inventory : MonoBehaviour
         if (CheckToolInInventory(tool.GetToolSO(), out int itemIndex))
         {
             //player has this tool item in inventory
-            Tools equippedTool = toolItemList[itemIndex].tool;
+            Tools equippedTool = toolItemList[itemIndex];
 
             equippedTool.setParent(null);
             equippedTool.transform.position = tool.transform.position;
@@ -310,8 +296,7 @@ public class Inventory : MonoBehaviour
 
             BoxCollider collider = tool.gameObject.GetComponent<BoxCollider>();
             collider.enabled = false;
-            toolItem toolitem = new(tool, 1);
-            toolItemList.Add(toolitem);
+            toolItemList.Add(tool);
 
             Player.Instance.SetEquippedTool(tool);
             toggleEqupipedItem(tool);
@@ -322,8 +307,7 @@ public class Inventory : MonoBehaviour
             tool.GetRigidbody().isKinematic = true;
             BoxCollider collider = tool.gameObject.GetComponent<BoxCollider>();
             collider.enabled = false;
-            toolItem toolitem = new(tool, 1);
-            toolItemList.Add(toolitem);
+            toolItemList.Add(tool);
 
             Player.Instance.SetEquippedTool(tool);
             toggleEqupipedItem(tool);
@@ -370,7 +354,7 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < toolItemList.Count; i++)
         {
             //cycle through inventory
-            if (toolItemList[i].tool.GetToolSO() == toolSO)
+            if (toolItemList[i].GetToolSO() == toolSO)
             {
                 itemIndex = i;
                 return true;

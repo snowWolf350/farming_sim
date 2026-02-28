@@ -5,13 +5,21 @@ public class selectedInteractable : MonoBehaviour
     ICanInteract baseInteract;
     Outline outline;
 
-    private void Start()
+    private void Awake()
     {
-        baseInteract = transform.parent.GetComponent<ICanInteract>();
-        Player.OnInteractableChanged += Player_OnInteractableChanged;
+        baseInteract = GetComponentInParent<ICanInteract>();
         outline = GetComponent<Outline>();
     }
 
+    private void OnEnable()
+    {
+        Player.OnInteractableChanged += Player_OnInteractableChanged;
+    }
+
+    private void OnDisable()
+    {
+        Player.OnInteractableChanged -= Player_OnInteractableChanged;
+    }
     private void Player_OnInteractableChanged(object sender, Player.OnInteractableChangedEventArgs e)
     {
         if (outline!= null)

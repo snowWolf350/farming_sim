@@ -132,29 +132,10 @@ public class Player : MonoBehaviour
 
         if (Physics.Raycast(interactRay, out interactHit, interactDistance))
         {
-            if (interactHit.transform.TryGetComponent(out PlantSite plantSite))
-            {
-                // looking at a plant site 
-                SetInteractable(plantSite);
-            }
+            ICanInteract interact =
+            interactHit.collider.GetComponent<ICanInteract>();
 
-            if (interactHit.transform.TryGetComponent(out Plant plant))
-            {
-                //looking at plant
-                SetInteractable(plant);
-            }
-            if (interactHit.transform.TryGetComponent(out Tools tools))
-            {
-                SetInteractable(tools);
-            }
-            if (interactHit.transform.TryGetComponent(out SeedStorage seedStorage))
-            {
-                SetInteractable(seedStorage);
-            }
-            if (interactHit.transform.TryGetComponent(out DeliveryChute deliveryChute))
-            {
-                SetInteractable(deliveryChute);
-            }
+            SetInteractable(interact);
         }
         else
         {
@@ -167,6 +148,8 @@ public class Player : MonoBehaviour
 
     void SetInteractable(ICanInteract iCanInteract)
     {
+        if (Interactable == iCanInteract) return;
+
         Interactable = iCanInteract;
         OnInteractableChanged?.Invoke(this, new OnInteractableChangedEventArgs
         {
