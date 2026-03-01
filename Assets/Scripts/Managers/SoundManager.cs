@@ -12,6 +12,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] AudioClip OnPlantWateredAudio;
     [SerializeField] AudioClip OnPlantDisinfectedAudio;
     [SerializeField] AudioClip OnItemBroughtAudio;
+    [SerializeField] AudioClip OnToolBroughtAudio;
 
     private void Start()
     {
@@ -21,6 +22,12 @@ public class SoundManager : MonoBehaviour
         PlantSite.onPlantWatered += PlantSite_onPlantWatered;
         Inventory.onItemPickedUp += Inventory_onItemPickedUp;
         ShopManager.OnItemBrought += ShopManager_OnItemBrought;
+        ShopManager.OnToolBrought += ShopManager_OnToolBrought;
+    }
+
+    private void ShopManager_OnToolBrought(object sender, System.EventArgs e)
+    {
+        AudioSource.PlayClipAtPoint(OnToolBroughtAudio, new Vector3(6.9f, 0, 0),.9f);
     }
 
     private void ShopManager_OnItemBrought(object sender, System.EventArgs e)

@@ -15,6 +15,7 @@ public class ShopManager : MonoBehaviour
     [SerializeField] GameObject UI;
 
     public static event EventHandler OnItemBrought;
+    public static event EventHandler OnToolBrought;
 
     [Header("containers")]
     [SerializeField] Transform SeedStorageContainer;
@@ -149,6 +150,7 @@ public class ShopManager : MonoBehaviour
                     //this is the tool the player wants 
                     toolSpawner.spawnTool(toolsSO);
                     OnItemBrought?.Invoke(this, EventArgs.Empty);
+                    OnToolBrought?.Invoke(this, EventArgs.Empty);
                 }
             }
         }

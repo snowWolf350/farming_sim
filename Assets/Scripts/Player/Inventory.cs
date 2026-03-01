@@ -288,6 +288,7 @@ public class Inventory : MonoBehaviour
             Tools equippedTool = toolItemList[itemIndex];
 
             equippedTool.setParent(null);
+            equippedTool.gameObject.SetActive(true);
             equippedTool.transform.position = tool.transform.position;
             equippedTool.GetRigidbody().isKinematic = false;
 
