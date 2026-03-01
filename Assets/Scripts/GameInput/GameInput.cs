@@ -46,8 +46,9 @@ public class GameInput : MonoBehaviour
         playerInput.player.shop.performed += Shop_performed;
         Cursor.lockState = CursorLockMode.Locked;
         mouseIsLocked = true;
-    }
 
+        GameManager.Instance.OnGameStaateChanged += GameManager_OnGameStaateChanged;
+    }
 
     private void OnEnable()
     {
@@ -65,6 +66,20 @@ public class GameInput : MonoBehaviour
         playerInput.player.shop.Enable();
     }
 
+
+    private void GameManager_OnGameStaateChanged(object sender, EventArgs e)
+    {
+        if (GameManager.Instance.IsInMenu())
+        {
+            mouseIsLocked = false;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            mouseIsLocked = true;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
 
     private void Shop_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {

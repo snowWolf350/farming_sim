@@ -33,16 +33,18 @@ public class DeliveryManager : MonoBehaviour
     int lifeAmount = 0;
 
     [SerializeField] TextMeshProUGUI PlayerlifeAmountText;
+    [SerializeField] TextMeshProUGUI TotallifeAmountText;
 
     int lifeAmountDelivered;
 
-    const int LifeAmountRequired = 500;
+    const int LifeAmountRequired = 1000;
 
     private void Awake()
     {
         deliveredPlantItemList = new List<DeliverdItem>();
         templateList = new List<Transform>();
         Instance = this;
+        updateLifeAmountUI();
     }
 
     private void Start()
@@ -159,6 +161,7 @@ public class DeliveryManager : MonoBehaviour
     public void updateLifeAmountUI()
     {
         PlayerlifeAmountText.text = lifeAmount.ToString();
+        TotallifeAmountText.text = string.Concat("Total:" + lifeAmountDelivered.ToString() + "/" + LifeAmountRequired.ToString());
     }
 
 

@@ -1,13 +1,28 @@
 using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour,IHasProgress
 {
     public static GameManager Instance { get; private set; }
 
+
+    [Header("Buttons")]
+    [SerializeField] Button[] MainMenuButtonList;
+    [SerializeField] Button[] RetryButtonList;
+    [SerializeField] Button ResumeButton;
+    [SerializeField] Button PauseButton;
+    [Header("EndScreen")]
+    [SerializeField] GameObject EndScreen;
+    [SerializeField] TextMeshProUGUI endText;
+    [Header("PauseScreenScreen")]
+    [SerializeField] GameObject PauseScreen;
+
     float globalTimer = 0;
     float countDownTimer = 3;
-    float gameTimeMax = 240;
+    float gameTimeMax = 120;
 
     enum gameState
     {
@@ -27,11 +42,40 @@ public class GameManager : MonoBehaviour,IHasProgress
     private void Awake()
     {
         Instance = this;
+
+        foreach (Button button in MainMenuButtonList)
+        {
+            button.onClick.AddListener(() =>
+            {
+                SceneManager.LoadScene(0);
+            });
+        }
+        foreach (Button button in RetryButtonList)
+        {
+            button.onClick.AddListener(() =>
+            {
+                SceneManager.LoadScene(1);
+            });
+        }
+
+        PauseButton.onClick.AddListener(() => {
+            Time.timeScale = 0;
+            PauseScreen.SetActive(true);
+            setGameState(gameState.pause);
+        });
+        ResumeButton.onClick.AddListener(() => {
+            Time.timeScale = 1;
+            PauseScreen.SetActive(false);
+            setGameState(gameState.game);
+        });
     }
 
     private void Start()
     {
+        Time.timeScale = 1;
         setGameState(gameState.start);
+        PauseScreen.SetActive(false);
+        EndScreen.SetActive(false);
     }
 
     private void Update()
@@ -72,18 +116,22 @@ public class GameManager : MonoBehaviour,IHasProgress
                 }
                 break;
             case gameState.won:
-
+                EndScreen.SetActive(true);
+                endText.text = "Congrat's you passed the quota";
                 onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
                 {
                     progressNormalized = 1
                 });
                 break;
             case gameState.lost:
-
+                EndScreen.SetActive(true);
+                endText.text = "Too bad you didn't meet the quota";
                 onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
                 {
                     progressNormalized = 1
                 });
+                break;
+            case gameState.pause:
                 break;
         }
     }
@@ -97,6 +145,13 @@ public class GameManager : MonoBehaviour,IHasProgress
     public bool CountDownIsActive()
     {
         return currentGameState == gameState.start;
+    }
+    public bool IsInMenu()
+    {
+        if(currentGameState == gameState.start|| currentGameState == gameState.game)
+        return false;
+
+        return true;
     }
     public float GetCountDownTimer()
     {
