@@ -17,7 +17,7 @@ Multiple interactions : <br>
 Baking lights : <br>
 <img src = "images/spawnedTransform.png" width = "400">
 
-Time based stateMachines :
+Time based stateMachines :</br>
 <img src = "images/timeBased_stateMachines.png" width = "400">
 
 Working on importing and managing blender models 
