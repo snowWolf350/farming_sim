@@ -5,14 +5,21 @@ Thus Is the Gane I was doing during my semester end exams instead of studying :)
 <h2>Systems I implemented</h3>
 
 
-An inventory system :
+An inventory system :</br>
+<img src = "images/multiple_items.png" width = "400">
 
-A shop system : 
+A shop system : </br>
+<img src = "images/plant_container.png" width = "400">
 
-Multiple interactions : 
+Multiple interactions : <br>
+<img src = "images/interacting.png" width = "400">
 
-Baking lights : 
+Baking lights : <br>
+<img src = "images/spawnedTransform.png" width = "400">
 
-Working on importing and managing blender models :
+Time based stateMachines :
+<img src = "images/timeBased_stateMachines.png" width = "400">
+
+Working on importing and managing blender models 
 
 Here is the itch page : 
