@@ -1,6 +1,6 @@
 # A futursitic FPS farming Game. 
 
-Thus Is the Gane I was doing during my semester end exams instead of studying :) I have tried and implemented multiple features I have never made before. 
+This Is the Game I was making during my semester end exams instead of studying :) I have tried and implemented multiple features I have never made before. 
 
 <h2>Systems I implemented</h3>
 
